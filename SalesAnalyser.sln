@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesAnalyser", "SalesAnalyser\SalesAnalyser.csproj", "{C77BCE15-BED7-43FF-9113-B19E6BA0FCC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyser", "SalesAnalyser\SalesAnalyser.csproj", "{C77BCE15-BED7-43FF-9113-B19E6BA0FCC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{2C9ED928-8664-40D5-B9D2-79442AC5EC28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{B78188BE-4EB8-419C-8DBE-56755E3570C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{B78188BE-4EB8-419C-8DBE-56755E3570C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfraStructure", "InfraStructure\InfraStructure.csproj", "{496875BC-C0F0-40E7-A8AA-364DA98E0B2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfraStructure", "InfraStructure\InfraStructure.csproj", "{496875BC-C0F0-40E7-A8AA-364DA98E0B2C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessTest", "BusinessTest\BusinessTest.csproj", "{0754F473-C588-45AE-8345-80FF53EEA4FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessTest", "BusinessTest\BusinessTest.csproj", "{0754F473-C588-45AE-8345-80FF53EEA4FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{C77BCE15-BED7-43FF-9113-B19E6BA0FCC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C77BCE15-BED7-43FF-9113-B19E6BA0FCC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C77BCE15-BED7-43FF-9113-B19E6BA0FCC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C9ED928-8664-40D5-B9D2-79442AC5EC28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C9ED928-8664-40D5-B9D2-79442AC5EC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C9ED928-8664-40D5-B9D2-79442AC5EC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C9ED928-8664-40D5-B9D2-79442AC5EC28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B78188BE-4EB8-419C-8DBE-56755E3570C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B78188BE-4EB8-419C-8DBE-56755E3570C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B78188BE-4EB8-419C-8DBE-56755E3570C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
