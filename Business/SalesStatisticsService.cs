@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace Business
 {
-    class SalesStatisticsService : ISalesStatisticsService
+    public class SalesStatisticsService : ISalesStatisticsService
     {
         public IList<String> CalculateWorstSellers(IList<Sale> sales)
         {

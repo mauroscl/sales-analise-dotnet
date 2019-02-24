@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Business;
 using FileHelpers;
-using Infra;
 
 namespace InfraStructure
 {
     public class SalesContextLoader : ISalesContextLoader
     {
-        private const string SalesmanIdentifier = "001";
-        private const string CustomerIdentifier = "002";
-        private const string SaleIdentifier = "003";
+        private const string SalesmanIdentifier = "Salesman";
+        private const string CustomerIdentifier = "Customer";
+        private const string SaleIdentifier = "SaleItems";
 
         public SalesContext Load(string filePath)
         {

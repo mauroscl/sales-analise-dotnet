@@ -13,6 +13,6 @@ namespace Business
 
         private int AmountSalesman { get; }
         private int AmountCustomer { get; }
-        private IEnumerable<Sale> Sales { get; }
+        public IEnumerable<Sale> Sales { get; }
     }
 }

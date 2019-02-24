@@ -5,6 +5,9 @@ namespace Business
     [DelimitedRecord("-")]
     public class SaleItem
     {
+        public SaleItem()
+        {
+        }
         public SaleItem(string id, double quantity, double price)
         {
             Id = id;

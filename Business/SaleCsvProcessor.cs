@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business
 {
-    class SaleCsvProcessor: ISaleDataProcessor
+    public class SaleCsvProcessor: ISaleDataProcessor
     {
-        private ISalesContextLoader _salesContextLoader;
-        private ISalesStatisticsService _salesStatisticsService;
+        private readonly ISalesContextLoader _salesContextLoader;
+        private readonly ISalesStatisticsService _salesStatisticsService;
 
-        public SaleCsvProcessor()
+        public SaleCsvProcessor(ISalesContextLoader salesContextLoader, ISalesStatisticsService salesStatisticsService)
         {
-            //this.salesContextLoader = new SalesContextLoader();
-            this._salesStatisticsService = new SalesStatisticsService();
+            _salesContextLoader = salesContextLoader;
+            _salesStatisticsService = salesStatisticsService;
         }
 
         public void Process(string filePath)
         {
-            throw new NotImplementedException();
+            var salesContext = _salesContextLoader.Load(filePath);
+            var mostExpensiveSales = _salesStatisticsService.CalculateMostExpensiveSales(salesContext.Sales.ToList());
+            Console.WriteLine("most expensive: " + String.Join(',', mostExpensiveSales));
         }
     }
 }

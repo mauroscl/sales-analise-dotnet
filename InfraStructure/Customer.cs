@@ -1,7 +1,6 @@
-﻿using System;
-using FileHelpers;
+﻿using FileHelpers;
 
-namespace Infra
+namespace InfraStructure
 {
     [DelimitedRecord("ç")]
     class Customer

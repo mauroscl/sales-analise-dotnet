@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Business
 {
-    interface ISaleDataProcessor
+    public interface ISaleDataProcessor
     {
         void Process(string filePath);
     }

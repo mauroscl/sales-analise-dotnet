@@ -1,19 +1,27 @@
-﻿using System;
+﻿using Business;
+using InfraStructure;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.IO;
-using System.Security.Permissions;
 
 namespace SalesAnalyser
 {
     class Program
     {
+        private static IServiceProvider _serviceProvider;
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Run();
+            _serviceProvider = new ServiceCollection()
+                .AddTransient<ISaleDataProcessor, SaleCsvProcessor>()
+                .AddTransient<ISalesContextLoader, SalesContextLoader>()
+                .AddTransient<ISalesStatisticsService, SalesStatisticsService>()
+                .BuildServiceProvider();
+
+            Run(_serviceProvider);
         }
 
         //[PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        private static void Run()
+        private static void Run(IServiceProvider serviceProvider)
         {
             string[] args = Environment.GetCommandLineArgs();
 
@@ -50,7 +58,6 @@ namespace SalesAnalyser
 
                 // Begin watching.
                 watcher.EnableRaisingEvents = true;
-
                 // Wait for the user to quit the program.
                 Console.WriteLine("Press 'q' to quit the sample.");
                 while (Console.Read() != 'q') ;
@@ -58,9 +65,13 @@ namespace SalesAnalyser
         }
 
         // Define the event handlers.
-        private static void OnChanged(object source, FileSystemEventArgs e) =>
-            // Specify what is done when a file is changed, created, or deleted.
+        private static void OnChanged(object source, FileSystemEventArgs e)
+        {
             Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
+            ISaleDataProcessor saleDataProcessor = _serviceProvider.GetService<ISaleDataProcessor>();
+            saleDataProcessor.Process(e.FullPath);
+        }
+
 
         private static void OnRenamed(object source, RenamedEventArgs e) =>
             // Specify what is done when a file is renamed.

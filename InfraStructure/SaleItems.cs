@@ -1,7 +1,6 @@
 ﻿using FileHelpers;
-using System;
 
-namespace Infra
+namespace InfraStructure
 {
     [DelimitedRecord("ç")]
     public class SaleItems
