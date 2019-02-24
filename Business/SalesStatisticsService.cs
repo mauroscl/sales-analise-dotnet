@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 
 namespace Business
 {
-    class SalesStatisticsService
+    class SalesStatisticsService : ISalesStatisticsService
     {
-        internal IList<String> CalculateWorstSellers(IList<Sale> sales)
+        public IList<String> CalculateWorstSellers(IList<Sale> sales)
         {
             if (!sales.Any())
             {
@@ -30,7 +30,7 @@ namespace Business
                 .Select(sale => sale.Salesman).ToList();
         }
 
-        internal IEnumerable<String> CalculateMostExpensiveSales(IList<Sale> sales)
+        public IList<String> CalculateMostExpensiveSales(IList<Sale> sales)
         {
             if (!sales.Any())
             {
@@ -39,7 +39,7 @@ namespace Business
             double maxTotal = sales.Max(sale => sale.Total);
             return sales
                 .Where(sale => sale.Total.Equals(maxTotal))
-                .Select(sale => sale.SaleId);
+                .Select(sale => sale.SaleId).ToList();
         }
     }
 }

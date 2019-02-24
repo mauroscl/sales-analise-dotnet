@@ -8,7 +8,7 @@ namespace Infra
     {
         private string RowIdentifier { get; set; }
         public string SaleId { get; protected set; }
-        public string Itens { get; protected set; }
+        public string SerializedItems { get; protected set; }
         public string Salesman { get; protected set; }
 
     }

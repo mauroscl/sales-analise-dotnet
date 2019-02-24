@@ -1,10 +1,12 @@
-﻿using Business;
-using FileHelpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Business;
+using FileHelpers;
+using Infra;
 
-namespace Infra
+namespace InfraStructure
 {
     public class SalesContextLoader : ISalesContextLoader
     {
@@ -18,7 +20,7 @@ namespace Infra
                 typeof(Customer),
                 typeof(SaleItems)) {RecordSelector = CustomSelector};
 
-            object[] records = engine.ReadFile(filePath);
+            var records = engine.ReadFile(filePath);
 
             return TransformToSalesContext(records);
         }
@@ -29,11 +31,11 @@ namespace Infra
                 .GroupBy(r => r.GetType().Name)
                 .ToDictionary(g => g.Key, g => g.ToList());
 
-            int amountSalesman =
+            var amountSalesman =
                 dictionary.TryGetValue(SalesmanIdentifier, out var saleObjects) 
                     ? saleObjects.Count 
                     : 0;
-            int amountCustomer = dictionary.TryGetValue(CustomerIdentifier, out var customerObjects)
+            var amountCustomer = dictionary.TryGetValue(CustomerIdentifier, out var customerObjects)
                 ? customerObjects.Count
                 : 0;
 
@@ -45,23 +47,42 @@ namespace Infra
 
         }
 
-        private IEnumerable<Sale> TransformToSales(IEnumerable<object>  salesObjects)
+        private IEnumerable<Sale> TransformToSales(IList<object>  salesObjects)
         {
-            return salesObjects.Cast<SaleItems>().Select(TransformToSale);
+            var sales = new List<Sale>();
+            foreach (var saleItems in salesObjects.Cast<SaleItems>())
+            {
+                try
+                {
+                    sales.Add(TransformToSale(saleItems)); 
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+
+            return sales;
         }
 
         private Sale TransformToSale(SaleItems saleItems)
         {
             var sale = new Sale(saleItems.SaleId, saleItems.Salesman);
-            var itens = getSaleItems(saleItems.Itens);
+            var itens = TransformToSaleItems(saleItems.SerializedItems);
             sale.SetItems(itens);
             return sale;
         }
 
-        private IEnumerable<SaleItem> getSaleItems(string serializedItems)
+        private IEnumerable<SaleItem> TransformToSaleItems(string serializedItems)
         {
+            var regex = new Regex("^\\[.+\\]$");
+            if (!regex.IsMatch(serializedItems))
+            {
+                throw new Exception("Invalid Sale Items format: " + serializedItems);
+            }
+
             var engine = new FileHelperEngine<SaleItem>();
-            return engine.ReadString(serializedItems.Replace(",", "\r\n"));
+            return engine.ReadString(serializedItems.Substring(1, serializedItems.Length -2).Replace(",", "\r\n"));
         }
 
         private Type CustomSelector(MultiRecordEngine engine, string recordLine)
