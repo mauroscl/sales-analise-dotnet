@@ -6,7 +6,7 @@ namespace SalesAnalyser.FileProcessing
 {
     class FileProcessor
     {
-        public void Process(String filePath)
+        public void Process(string filePath)
         {
 
         }

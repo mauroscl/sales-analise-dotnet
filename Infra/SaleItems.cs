@@ -6,7 +6,7 @@ using FileHelpers;
 namespace Infra
 {
     [DelimitedRecord("ç")]
-    class SaleItems
+    public class SaleItems
     {
         private String RowIdentifier { get; set; }
         public String SaleId { get; protected set; }

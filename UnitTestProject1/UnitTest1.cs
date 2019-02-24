@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Infra;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -28,20 +30,39 @@ namespace UnitTestProject1
             var records = fileProcessor.ProcessMultiType();
             Assert.AreEqual(6, records.Length);
 
-            var groupedList =
-                (from record in records
-                    group record by record.GetType().Name
-                    into grouping
-                    select new
-                    {
-                        Type = grouping.Key,
-                        Records = grouping.ToList()
-                    }).ToList();
+            var dictionary = records
+                .GroupBy(r => r.GetType().Name)
+                .ToDictionary(g => g.Key, g => g.ToList());
 
-            foreach (var group in groupedList)
+            var salesItemObjects = dictionary["SaleItems"];
+
+            var saleItems = salesItemObjects.Cast<SaleItems>();
+
+            var regex = new Regex("^\\[.+\\]$");
+
+            foreach (var saleItem in saleItems)
             {
-                Console.WriteLine("Type=" + group.Type + " - Size: " + group.Records.Count);
+                Console.WriteLine(saleItem.Itens + " - Match: " + regex.IsMatch(saleItem.Itens)); 
             }
+
+            //var x = new Dictionary<string, List<object> >();
+            //x.TryGetValue("001", out var y);
+
+            //var groupedList =
+            //    (from record in records
+            //        group record by record.GetType().Name
+            //        into grouping
+            //        select new 
+            //        {
+            //            Type = grouping.Key,
+            //            Records = grouping.ToList()
+            //        }).ToList();
+
+            //foreach (var group in groupedList)
+            //{
+            //    Console.WriteLine("Type=" + group.Type + " - Size: " + group.Records.Count);
+            //}
+
         }
     }
 }

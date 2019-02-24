@@ -5,7 +5,7 @@ namespace Infra
 {
     public class FileProcessor
     {
-        public SaleItem[] Process(String filePath)
+        public SaleItem[] Process(string filePath)
         {
             var engine = new FileHelperEngine<SaleItem>();
             return engine.ReadString("003-10-11-11.5");
@@ -33,7 +33,7 @@ namespace Infra
 
         private Type CustomSelector(MultiRecordEngine engine, string recordLine)
         {
-            if (String.IsNullOrEmpty(recordLine) || recordLine.Length < 3)
+            if (string.IsNullOrEmpty(recordLine) || recordLine.Length < 3)
                 return null;
 
             var typeIdentifier = recordLine.Substring(0, 3);
