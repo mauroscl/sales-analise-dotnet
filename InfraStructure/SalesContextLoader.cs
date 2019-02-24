@@ -9,9 +9,9 @@ namespace InfraStructure
 {
     public class SalesContextLoader : ISalesContextLoader
     {
-        private const string SalesmanIdentifier = "Salesman";
-        private const string CustomerIdentifier = "Customer";
-        private const string SaleIdentifier = "SaleItems";
+        private const string SalesmanIdentifier = "001";
+        private const string CustomerIdentifier = "002";
+        private const string SaleIdentifier = "003";
 
         public SalesContext Load(string filePath)
         {
@@ -31,14 +31,14 @@ namespace InfraStructure
                 .ToDictionary(g => g.Key, g => g.ToList());
 
             var amountSalesman =
-                dictionary.TryGetValue(SalesmanIdentifier, out var saleObjects) 
+                dictionary.TryGetValue(typeof(Salesman).Name, out var saleObjects) 
                     ? saleObjects.Count 
                     : 0;
-            var amountCustomer = dictionary.TryGetValue(CustomerIdentifier, out var customerObjects)
+            var amountCustomer = dictionary.TryGetValue(typeof(Customer).Name, out var customerObjects)
                 ? customerObjects.Count
                 : 0;
 
-            var sales = dictionary.TryGetValue(SaleIdentifier, out var salesObjects)
+            var sales = dictionary.TryGetValue(typeof(SaleItems).Name, out var salesObjects)
                 ?  TransformToSales(salesObjects)
                 : new List<Sale>();
 
