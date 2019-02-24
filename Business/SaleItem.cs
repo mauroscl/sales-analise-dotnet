@@ -1,11 +1,17 @@
-﻿using System;
-using FileHelpers;
+﻿using FileHelpers;
 
-namespace Infra
+namespace Business
 {
     [DelimitedRecord("-")]
     public class SaleItem
     {
+        public SaleItem(string id, double quantity, double price)
+        {
+            Id = id;
+            Quantity = quantity;
+            Price = price;
+        }
+
         private string RowIdentifier { get; set; }
         public string Id {get; protected set; }
         public double Quantity { get; protected set; }

@@ -1,20 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("BusinessTest")]
 
 namespace Business
 {
     class SalesStatisticsService
     {
-        IEnumerable<String> CalculateWorstSellers(IEnumerable<Sale> sales)
+        internal IList<String> CalculateWorstSellers(IList<Sale> sales)
         {
-            return null;
+            if (!sales.Any())
+            {
+                return new List<string>();
+            }
+            var salesBySalesman = sales
+                .GroupBy(sale => sale.Salesman)
+                .Select(group => new
+                {
+                    Salesman = group.Key,
+                    Total = group.Sum(sale => sale.Total)
+                }).ToList();
 
+            double minTotal = salesBySalesman.Min(x => x.Total);
+
+            return salesBySalesman
+                .Where(sale => sale.Total.Equals(minTotal))
+                .Select(sale => sale.Salesman).ToList();
         }
 
-        IEnumerable<String> CalculateMostExpensiveSales(IEnumerable<Sale> sales)
+        internal IEnumerable<String> CalculateMostExpensiveSales(IList<Sale> sales)
         {
-            return null;
+            if (!sales.Any())
+            {
+                return new List<string>();
+            }
+            double maxTotal = sales.Max(sale => sale.Total);
+            return sales
+                .Where(sale => sale.Total.Equals(maxTotal))
+                .Select(sale => sale.SaleId);
         }
     }
 }
