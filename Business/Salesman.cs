@@ -1,9 +1,9 @@
 ﻿using FileHelpers;
 
-namespace InfraStructure
+namespace Business
 {
     [DelimitedRecord("ç")]
-    class Salesman
+    public class Salesman
     {
         private string RowIdentifier { get; set; }
         public string Cpf { get; protected set; }
