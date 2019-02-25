@@ -80,5 +80,5 @@ To close the application press 'q' and Enter.
 Each processed file will be moved from input directory to processed subdirectory
 The solution was implemented with the following technologies:
 - Dot Net Core: for bootstrapping, dependency injection and management of the application
-- File Helpers: for importing and exporting the files
+- File Helpers (https://www.filehelpers.net/): for importing and exporting the files
 - MsTest and Moq: for unit tests
