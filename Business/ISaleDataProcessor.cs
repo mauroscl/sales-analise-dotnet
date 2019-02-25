@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Business
+﻿namespace Business
 {
     public interface ISaleDataProcessor
     {
-        void Process(string sourcePath, string destinationPath);
+        void Process(string sourceFile, string destinationPath);
     }
 }

@@ -10,6 +10,9 @@ namespace SalesAnalyser
     class Program
     {
         private static IServiceProvider _serviceProvider;
+        private const string InputPath = "d:\\data\\in";
+        private const string OutputPath = "d:\\data\\out";
+
         static void Main(string[] args)
         {
             _serviceProvider = new ServiceCollection()
@@ -17,13 +20,14 @@ namespace SalesAnalyser
                 .AddTransient<ISalesContextLoader, SalesContextLoader>()
                 .AddTransient<ISalesStatisticsService, SalesStatisticsService>()
                 .AddTransient<ISalesSummaryOutputService, SalesSummaryOutputFileService>()
+                .AddTransient<IFileService, FileService>()
                 .BuildServiceProvider();
 
-            Run(_serviceProvider);
+            Run();
         }
 
         //[PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        private static void Run(IServiceProvider serviceProvider)
+        private static void Run()
         {
             string[] args = Environment.GetCommandLineArgs();
 
@@ -35,23 +39,38 @@ namespace SalesAnalyser
             //    return;
             //}
 
+            var fileService = _serviceProvider.GetService<IFileService>();
+
+            fileService.CreateApplicationDirectories(InputPath, OutputPath);
+
+            ISaleDataProcessor saleDataProcessor = _serviceProvider.GetService<ISaleDataProcessor>();
+
+            var unprocessedFiles = fileService.GetUnprocessedFiles(InputPath);
+            foreach (var unprocessedFile in unprocessedFiles)
+            {
+                saleDataProcessor.Process(unprocessedFile, OutputPath);
+            }
+
+            InitializeWatcher();
+
+        }
+
+        private static void InitializeWatcher()
+        {
             // Create a new FileSystemWatcher and set its properties.
             using (FileSystemWatcher watcher = new FileSystemWatcher())
             {
                 watcher.IncludeSubdirectories = false;
-                watcher.Path = "d:/data/in";
+                watcher.Path = InputPath;
 
                 // Watch for changes in LastAccess and LastWrite times, and
                 // the renaming of files or directories.
                 watcher.NotifyFilter = NotifyFilters.LastAccess
                                        | NotifyFilters.LastWrite
-                                       | NotifyFilters.FileName
-                                       ;
-                                     //| NotifyFilters.DirectoryName;
+                                       | NotifyFilters.FileName;
 
-                // Only watch text files.
+                // Only watch dat files.
                 watcher.Filter = "*.dat";
-
 
                 // Add event handlers.
                 watcher.Changed += OnChanged;
@@ -61,10 +80,14 @@ namespace SalesAnalyser
 
                 // Begin watching.
                 watcher.EnableRaisingEvents = true;
+
                 // Wait for the user to quit the program.
-                Console.WriteLine("Press 'q' to quit the sample.");
+                Console.WriteLine("Press 'q' to quit the application.");
                 while (Console.Read() != 'q') ;
+
             }
+
+
         }
 
         // Define the event handlers.
@@ -72,12 +95,7 @@ namespace SalesAnalyser
         {
             Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
             ISaleDataProcessor saleDataProcessor = _serviceProvider.GetService<ISaleDataProcessor>();
-            saleDataProcessor.Process(e.FullPath, "d:\\data\\out");
+            saleDataProcessor.Process(e.FullPath, OutputPath);
         }
-
-
-        private static void OnRenamed(object source, RenamedEventArgs e) =>
-            // Specify what is done when a file is renamed.
-            Console.WriteLine($"File: {e.OldFullPath} renamed to {e.FullPath}");
     }
 }

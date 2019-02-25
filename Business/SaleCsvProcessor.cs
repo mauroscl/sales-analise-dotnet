@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Business
 {
@@ -20,15 +17,16 @@ namespace Business
             _salesSummaryOutputService = salesSummaryOutputService;
         }
 
-        public void Process(string sourcePath, string destinationPath)
+        public void Process(string sourceFile, string destinationPath)
         {
-            var salesContext = _salesContextLoader.Load(sourcePath);
+            Console.WriteLine("Processing file: " + sourceFile);
+            var salesContext = _salesContextLoader.Load(sourceFile);
 
-            var destinationFileName = Path.GetFileNameWithoutExtension(sourcePath) + ".done" + Path.GetExtension(sourcePath);
+            var destinationFileName = Path.GetFileNameWithoutExtension(sourceFile) + ".done" + Path.GetExtension(sourceFile);
             var destinationFileFullPath = Path.Combine(destinationPath, destinationFileName);
 
-            var destinationProcessedFile = Path.Combine(Path.GetDirectoryName(sourcePath), "processed",
-                Path.GetFileName(sourcePath));
+            var destinationProcessedFile = Path.Combine(Path.GetDirectoryName(sourceFile), "processed",
+                Path.GetFileName(sourceFile));
 
             var mostExpensiveSales = _salesStatisticsService.CalculateMostExpensiveSales(salesContext.Sales);
             var worstSellers = _salesStatisticsService.CalculateWorstSellers(salesContext.Sales);
@@ -37,11 +35,9 @@ namespace Business
 
             _salesSummaryOutputService.Write(destinationFileFullPath, salesSummary);
 
-            File.Move(sourcePath, destinationProcessedFile);
+            File.Move(sourceFile, destinationProcessedFile);
 
-
-
-
+            Console.WriteLine("File Processed: " + sourceFile);
         }
     }
 }
