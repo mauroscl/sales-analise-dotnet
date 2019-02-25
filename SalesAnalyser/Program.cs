@@ -65,28 +65,26 @@ namespace SalesAnalyser
 
                 // Watch for changes in LastAccess and LastWrite times, and
                 // the renaming of files or directories.
-                watcher.NotifyFilter = NotifyFilters.LastAccess
-                                       | NotifyFilters.LastWrite
-                                       | NotifyFilters.FileName;
+                //watcher.NotifyFilter = NotifyFilters.LastAccess
+                //                       | NotifyFilters.LastWrite
+                //                       | NotifyFilters.FileName;
 
                 // Only watch dat files.
                 watcher.Filter = "*.dat";
 
                 // Add event handlers.
-                watcher.Changed += OnChanged;
+                //watcher.Changed += OnChanged;
                 watcher.Created += OnChanged;
-                //watcher.Deleted += OnChanged;
-                //watcher.Renamed += OnRenamed;
 
                 // Begin watching.
                 watcher.EnableRaisingEvents = true;
 
                 // Wait for the user to quit the program.
                 Console.WriteLine("Press 'q' to quit the application.");
-                while (Console.Read() != 'q') ;
-
+                while (Console.Read() != 'q')
+                {
+                }
             }
-
 
         }
 
