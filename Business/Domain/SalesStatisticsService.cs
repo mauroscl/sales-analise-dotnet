@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("BusinessTest")]
 
-namespace Business
+namespace Business.Domain
 {
     public class SalesStatisticsService : ISalesStatisticsService
     {

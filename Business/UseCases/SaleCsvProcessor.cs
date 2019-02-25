@@ -1,7 +1,8 @@
 ﻿using System;
-using System.IO;
+using Business.Domain;
+using Business.Ports;
 
-namespace Business
+namespace Business.UseCases
 {
     public class SaleCsvProcessor: ISaleDataProcessor
     {

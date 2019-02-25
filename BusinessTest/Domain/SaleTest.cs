@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Business;
+﻿using System.Collections.Generic;
+using Business.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BusinessTest
+namespace BusinessTest.Domain
 {
     [TestClass]
     public class SaleTest

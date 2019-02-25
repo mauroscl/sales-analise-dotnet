@@ -1,4 +1,6 @@
-﻿namespace Business
+﻿using Business.Domain;
+
+namespace Business.Ports
 {
     public interface ISalesSummaryOutputService
     {

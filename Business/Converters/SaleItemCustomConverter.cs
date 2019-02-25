@@ -1,10 +1,11 @@
-﻿using FileHelpers;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Business.Domain;
+using FileHelpers;
 
-namespace Business
+namespace Business.Converters
 {
     internal class SaleItemCustomConverter: ConverterBase
     {
@@ -27,7 +28,6 @@ namespace Business
         private SaleItem DeserializeItem(string item)
         {
             var values = item.Split("-");
-            Console.WriteLine("length: " + values.Length);
             if (values.Length != 3)
             {
                 throw new Exception("Sale item must have 3 values: " + item);

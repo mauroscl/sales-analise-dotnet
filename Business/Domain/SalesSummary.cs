@@ -1,7 +1,8 @@
-﻿using FileHelpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Business.Converters;
+using FileHelpers;
 
-namespace Business
+namespace Business.Domain
 {
     [DelimitedRecord(";")]
     public class SalesSummary

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Business;
+using Business.Converters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BusinessTest
+namespace BusinessTest.Converters
 {
     [TestClass]
     public class ListCustomConverterTest

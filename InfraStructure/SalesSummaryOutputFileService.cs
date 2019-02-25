@@ -1,6 +1,8 @@
 ﻿using Business;
 using FileHelpers;
 using System.Collections.Generic;
+using Business.Domain;
+using Business.Ports;
 
 namespace InfraStructure
 {

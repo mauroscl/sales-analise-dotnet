@@ -1,6 +1,6 @@
 ﻿using FileHelpers;
 
-namespace Business
+namespace Business.Domain
 {
     [DelimitedRecord("-")]
     public class SaleItem

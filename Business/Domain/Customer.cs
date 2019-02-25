@@ -1,6 +1,6 @@
 ﻿using FileHelpers;
 
-namespace Business
+namespace Business.Domain
 {
     [DelimitedRecord("ç")]
     public class Customer

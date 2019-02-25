@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 
-namespace Business
+namespace Business.Ports
 {
     public interface IFileService
     {

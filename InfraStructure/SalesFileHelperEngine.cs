@@ -1,5 +1,6 @@
 ﻿using System;
 using Business;
+using Business.Domain;
 using FileHelpers;
 
 namespace InfraStructure

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Business.Domain;
 
-namespace Business
+namespace Business.Ports
 {
     public interface ISalesContextLoader
     {

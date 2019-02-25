@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Business;
+using Business.Domain;
+
 // ReSharper disable All
 
 namespace BusinessTest.DataProvider

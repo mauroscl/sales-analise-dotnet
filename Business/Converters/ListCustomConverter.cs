@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using FileHelpers;
 
-namespace Business
+namespace Business.Converters
 {
     internal class ListCustomConverter: ConverterBase
     {

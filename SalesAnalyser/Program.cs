@@ -3,6 +3,9 @@ using InfraStructure;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using Business.Domain;
+using Business.Ports;
+using Business.UseCases;
 
 namespace SalesAnalyser
 {

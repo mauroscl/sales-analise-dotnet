@@ -1,4 +1,4 @@
-﻿namespace Business
+﻿namespace Business.UseCases
 {
     public interface ISaleDataProcessor
     {

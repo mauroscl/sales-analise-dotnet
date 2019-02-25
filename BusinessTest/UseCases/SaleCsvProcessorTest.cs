@@ -1,9 +1,11 @@
-﻿using Business;
+﻿using Business.Domain;
+using Business.Ports;
+using Business.UseCases;
 using BusinessTest.DataProvider;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace BusinessTest
+namespace BusinessTest.UseCases
 {
     [TestClass]
     public class SaleCsvProcessorTest

@@ -1,10 +1,10 @@
-﻿using Business;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Business.Domain;
 using BusinessTest.DataProvider;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace BusinessTest
+namespace BusinessTest.Domain
 {
     [TestClass]
     public class SalesStatisticsServiceTest
