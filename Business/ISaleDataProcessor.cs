@@ -6,6 +6,6 @@ namespace Business
 {
     public interface ISaleDataProcessor
     {
-        void Process(string filePath);
+        void Process(string sourcePath, string destinationPath);
     }
 }

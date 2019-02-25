@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -9,18 +10,38 @@ namespace Business
     {
         private readonly ISalesContextLoader _salesContextLoader;
         private readonly ISalesStatisticsService _salesStatisticsService;
+        private readonly ISalesSummaryOutputService _salesSummaryOutputService;
 
-        public SaleCsvProcessor(ISalesContextLoader salesContextLoader, ISalesStatisticsService salesStatisticsService)
+        public SaleCsvProcessor(ISalesContextLoader salesContextLoader, ISalesStatisticsService salesStatisticsService, 
+            ISalesSummaryOutputService salesSummaryOutputService)
         {
             _salesContextLoader = salesContextLoader;
             _salesStatisticsService = salesStatisticsService;
+            _salesSummaryOutputService = salesSummaryOutputService;
         }
 
-        public void Process(string filePath)
+        public void Process(string sourcePath, string destinationPath)
         {
-            var salesContext = _salesContextLoader.Load(filePath);
-            var mostExpensiveSales = _salesStatisticsService.CalculateMostExpensiveSales(salesContext.Sales.ToList());
-            Console.WriteLine("most expensive: " + String.Join(',', mostExpensiveSales));
+            var salesContext = _salesContextLoader.Load(sourcePath);
+
+            var destinationFileName = Path.GetFileNameWithoutExtension(sourcePath) + ".done" + Path.GetExtension(sourcePath);
+            var destinationFileFullPath = Path.Combine(destinationPath, destinationFileName);
+
+            var destinationProcessedFile = Path.Combine(Path.GetDirectoryName(sourcePath), "processed",
+                Path.GetFileName(sourcePath));
+
+            var mostExpensiveSales = _salesStatisticsService.CalculateMostExpensiveSales(salesContext.Sales);
+            var worstSellers = _salesStatisticsService.CalculateWorstSellers(salesContext.Sales);
+
+            var salesSummary = new SalesSummary(salesContext.AmountSalesman, salesContext.AmountCustomer, worstSellers, mostExpensiveSales);
+
+            _salesSummaryOutputService.Write(destinationFileFullPath, salesSummary);
+
+            File.Move(sourcePath, destinationProcessedFile);
+
+
+
+
         }
     }
 }

@@ -3,6 +3,7 @@ using InfraStructure;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace SalesAnalyser
 {
@@ -15,6 +16,7 @@ namespace SalesAnalyser
                 .AddTransient<ISaleDataProcessor, SaleCsvProcessor>()
                 .AddTransient<ISalesContextLoader, SalesContextLoader>()
                 .AddTransient<ISalesStatisticsService, SalesStatisticsService>()
+                .AddTransient<ISalesSummaryOutputService, SalesSummaryOutputFileService>()
                 .BuildServiceProvider();
 
             Run(_serviceProvider);
@@ -36,6 +38,7 @@ namespace SalesAnalyser
             // Create a new FileSystemWatcher and set its properties.
             using (FileSystemWatcher watcher = new FileSystemWatcher())
             {
+                watcher.IncludeSubdirectories = false;
                 watcher.Path = "d:/data/in";
 
                 // Watch for changes in LastAccess and LastWrite times, and
@@ -69,7 +72,7 @@ namespace SalesAnalyser
         {
             Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
             ISaleDataProcessor saleDataProcessor = _serviceProvider.GetService<ISaleDataProcessor>();
-            saleDataProcessor.Process(e.FullPath);
+            saleDataProcessor.Process(e.FullPath, "d:\\data\\out");
         }
 
 

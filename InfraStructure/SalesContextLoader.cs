@@ -46,7 +46,7 @@ namespace InfraStructure
 
         }
 
-        private IEnumerable<Sale> TransformToSales(IList<object>  salesObjects)
+        private IList<Sale> TransformToSales(IList<object>  salesObjects)
         {
             var sales = new List<Sale>();
             foreach (var saleItems in salesObjects.Cast<SaleItems>())
