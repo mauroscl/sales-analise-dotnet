@@ -3,18 +3,22 @@ using InfraStructure;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace SalesAnalyser
 {
     class Program
     {
         private static IServiceProvider _serviceProvider;
-        private const string InputPath = "d:\\data\\in";
-        private const string OutputPath = "d:\\data\\out";
+        //private const string InputPath = "d:\\data\\in";
+        //private const string OutputPath = "d:\\data\\out";
+
+        private const string InputPath = "data\\in";
+        private const string OutputPath = "data\\out";
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Base Path: " + AppDomain.CurrentDomain.BaseDirectory);
+
             _serviceProvider = new ServiceCollection()
                 .AddTransient<ISaleDataProcessor, SaleCsvProcessor>()
                 .AddTransient<ISalesContextLoader, SalesContextLoader>()
@@ -63,17 +67,10 @@ namespace SalesAnalyser
                 watcher.IncludeSubdirectories = false;
                 watcher.Path = InputPath;
 
-                // Watch for changes in LastAccess and LastWrite times, and
-                // the renaming of files or directories.
-                //watcher.NotifyFilter = NotifyFilters.LastAccess
-                //                       | NotifyFilters.LastWrite
-                //                       | NotifyFilters.FileName;
-
                 // Only watch dat files.
                 watcher.Filter = "*.dat";
 
                 // Add event handlers.
-                //watcher.Changed += OnChanged;
                 watcher.Created += OnChanged;
 
                 // Begin watching.

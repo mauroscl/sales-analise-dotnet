@@ -8,36 +8,33 @@ namespace Business
         private readonly ISalesContextLoader _salesContextLoader;
         private readonly ISalesStatisticsService _salesStatisticsService;
         private readonly ISalesSummaryOutputService _salesSummaryOutputService;
+        private readonly IFileService _fileService;
 
         public SaleCsvProcessor(ISalesContextLoader salesContextLoader, ISalesStatisticsService salesStatisticsService, 
-            ISalesSummaryOutputService salesSummaryOutputService)
+            ISalesSummaryOutputService salesSummaryOutputService, IFileService fileService)
         {
             _salesContextLoader = salesContextLoader;
             _salesStatisticsService = salesStatisticsService;
             _salesSummaryOutputService = salesSummaryOutputService;
+            _fileService = fileService;
         }
 
-        public void Process(string sourceFile, string destinationPath)
+        public void Process(string inputFile, string outputPath)
         {
-            Console.WriteLine("Processing file: " + sourceFile);
-            var salesContext = _salesContextLoader.Load(sourceFile);
-
-            var destinationFileName = Path.GetFileNameWithoutExtension(sourceFile) + ".done" + Path.GetExtension(sourceFile);
-            var destinationFileFullPath = Path.Combine(destinationPath, destinationFileName);
-
-            var destinationProcessedFile = Path.Combine(Path.GetDirectoryName(sourceFile), "processed",
-                Path.GetFileName(sourceFile));
+            Console.WriteLine("Processing file: " + inputFile);
+            var salesContext = _salesContextLoader.Load(inputFile);
 
             var mostExpensiveSales = _salesStatisticsService.CalculateMostExpensiveSales(salesContext.Sales);
             var worstSellers = _salesStatisticsService.CalculateWorstSellers(salesContext.Sales);
 
             var salesSummary = new SalesSummary(salesContext.AmountSalesman, salesContext.AmountCustomer, worstSellers, mostExpensiveSales);
 
-            _salesSummaryOutputService.Write(destinationFileFullPath, salesSummary);
+            var outputFilePath = _fileService.GetStatisticsFileName(inputFile, outputPath);
+            _salesSummaryOutputService.Write(outputFilePath, salesSummary);
 
-            File.Move(sourceFile, destinationProcessedFile);
+            _fileService.MoveProcessedFile(inputFile);
 
-            Console.WriteLine("File Processed: " + sourceFile);
+            Console.WriteLine("File Processed: " + inputFile);
         }
     }
 }

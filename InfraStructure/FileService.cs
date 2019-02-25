@@ -18,5 +18,20 @@ namespace InfraStructure
             Directory.CreateDirectory(Path.Combine(inputPath, ProcessedDirectory));
             Directory.CreateDirectory(outputPath);
         }
+
+        public void MoveProcessedFile(string inputFile)
+        {
+            var destinationProcessedFile = Path.Combine(Path.GetDirectoryName(inputFile), ProcessedDirectory,
+                Path.GetFileName(inputFile));
+
+            File.Move(inputFile, destinationProcessedFile);
+        }
+
+        public string GetStatisticsFileName(string inputFile, string outputPath)
+        {
+            var destinationFileName = Path.GetFileNameWithoutExtension(inputFile) + ".done" + Path.GetExtension(inputFile);
+            return Path.Combine(outputPath, destinationFileName);
+
+        }
     }
 }

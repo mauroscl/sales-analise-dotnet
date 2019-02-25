@@ -2,6 +2,6 @@
 {
     public interface ISaleDataProcessor
     {
-        void Process(string sourceFile, string destinationPath);
+        void Process(string inputFile, string outputPath);
     }
 }
