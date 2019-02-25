@@ -1,4 +1,7 @@
-﻿using FileHelpers;
+﻿using System.Runtime.CompilerServices;
+using FileHelpers;
+
+[assembly: InternalsVisibleTo("InfraStructureTest")]
 
 namespace Business
 {
@@ -6,8 +9,8 @@ namespace Business
     public class Salesman
     {
         private string RowIdentifier { get; set; }
-        public string Cpf { get; protected set; }
-        public string Name { get; protected set; }
-        public double Salary { get; protected set; }
+        public string Cpf { get; protected internal set; }
+        public string Name { get; protected internal set; }
+        public double Salary { get; protected internal set; }
     }
 }
