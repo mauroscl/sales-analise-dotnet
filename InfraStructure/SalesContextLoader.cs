@@ -1,6 +1,4 @@
 ﻿using Business;
-using FileHelpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,18 +6,16 @@ namespace InfraStructure
 {
     public class SalesContextLoader : ISalesContextLoader
     {
-        private const string SalesmanIdentifier = "001";
-        private const string CustomerIdentifier = "002";
-        private const string SaleIdentifier = "003";
+        private readonly IFileHelperEngine _fileHelperEngine;
+
+        public SalesContextLoader(IFileHelperEngine fileHelperEngine)
+        {
+            _fileHelperEngine = fileHelperEngine;
+        }
 
         public SalesContext Load(string filePath)
         {
-            var engine = new MultiRecordEngine(typeof(Salesman),
-                typeof(Customer),
-                typeof(Sale)) {RecordSelector = CustomSelector};
-
-            var records = engine.ReadFile(filePath);
-
+            var records = _fileHelperEngine.ReadCsvFile(filePath);
             return TransformToSalesContext(records);
         }
 
@@ -45,27 +41,5 @@ namespace InfraStructure
 
         }
 
-        private Type CustomSelector(MultiRecordEngine engine, string recordLine)
-        {
-            if (string.IsNullOrEmpty(recordLine) || recordLine.Length < 3)
-                return null;
-
-            var typeIdentifier = recordLine.Substring(0, 3);
-            Type type = null;
-            switch (typeIdentifier)
-            {
-                case SalesmanIdentifier:
-                    type = typeof(Salesman);
-                    break;
-                case CustomerIdentifier:
-                    type = typeof(Customer);
-                    break;
-                case SaleIdentifier:
-                    type = typeof(Sale);
-                    break;
-            }
-
-            return type;
-        }
     }
 }

@@ -25,6 +25,7 @@ namespace SalesAnalyser
                 .AddTransient<ISalesStatisticsService, SalesStatisticsService>()
                 .AddTransient<ISalesSummaryOutputService, SalesSummaryOutputFileService>()
                 .AddTransient<IFileService, FileService>()
+                .AddTransient<IFileHelperEngine, SalesFileHelperEngine>()
                 .BuildServiceProvider();
 
             Run();
