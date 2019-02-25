@@ -22,6 +22,7 @@ namespace Business
         public void Process(string inputFile, string outputPath)
         {
             Console.WriteLine("Processing file: " + inputFile);
+
             var salesContext = _salesContextLoader.Load(inputFile);
 
             var mostExpensiveSales = _salesStatisticsService.CalculateMostExpensiveSales(salesContext.Sales);

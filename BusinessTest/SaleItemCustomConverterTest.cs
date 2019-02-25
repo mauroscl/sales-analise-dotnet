@@ -50,7 +50,7 @@ namespace BusinessTest
         public void MustConvertStringToSaleItem()
         {
             var saleItems = ((IList) _saleItemCustomConverter.StringToField("[1-20-30,2-30-50.1]")).Cast<SaleItem>().ToList();
-            Assert.AreEqual(2, saleItems.Count());
+            Assert.AreEqual(2, saleItems.Count);
 
             var saleItem1 = saleItems.ElementAt(0);
             Assert.AreEqual("1", saleItem1.Id);

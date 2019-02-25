@@ -16,8 +16,8 @@ namespace Business
 
         protected SalesSummary() {}
 
-        private int AmountSalesman { get; }
-        private int AmountCustomer { get; }
+        public int AmountSalesman { get; }
+        public int AmountCustomer { get; }
 
         [FieldConverter(typeof(ListCustomConverter))]
         public IList<string> WorstSellers { get;  }
