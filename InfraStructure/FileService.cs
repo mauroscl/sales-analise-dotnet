@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Business.Ports;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Business;
-using Business.Ports;
 
 namespace InfraStructure
 {
@@ -25,14 +24,21 @@ namespace InfraStructure
             var destinationProcessedFile = Path.Combine(Path.GetDirectoryName(inputFile), ProcessedDirectory,
                 Path.GetFileName(inputFile));
 
-            File.Move(inputFile, destinationProcessedFile);
+            try
+            {
+                File.Move(inputFile, destinationProcessedFile);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("Can't move the file to processed destination folder. Input file: " + inputFile);
+                Console.WriteLine(e.Message);
+            }
         }
 
         public string GetStatisticsFileName(string inputFile, string outputPath)
         {
             var destinationFileName = Path.GetFileNameWithoutExtension(inputFile) + ".done" + Path.GetExtension(inputFile);
             return Path.Combine(outputPath, destinationFileName);
-
         }
     }
 }
