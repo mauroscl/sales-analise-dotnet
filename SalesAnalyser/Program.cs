@@ -59,8 +59,10 @@ namespace SalesAnalyser
                 saleDataProcessor.Process(unprocessedFile, OutputPath);
             }
 
-            InitializeWatcher();
+            //KafkaProducer.SendMessages();
+            KafkaProducer.SendSale();
 
+            InitializeWatcher();
         }
 
         private static void InitializeWatcher()

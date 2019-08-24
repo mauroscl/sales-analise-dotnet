@@ -7,12 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="Confluent.Kafka" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Business\Business.csproj" />
-    <ProjectReference Include="..\InfraStructure\InfraStructure.csproj" />
   </ItemGroup>
 
 </Project>
