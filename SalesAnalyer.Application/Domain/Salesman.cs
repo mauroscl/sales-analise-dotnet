@@ -3,7 +3,7 @@ using FileHelpers;
 
 [assembly: InternalsVisibleTo("InfraStructureTest")]
 
-namespace Business.Domain
+namespace SalesAnalyzer.Application.Domain
 {
     [DelimitedRecord("ç")]
     public class Salesman

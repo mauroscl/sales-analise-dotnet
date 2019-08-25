@@ -1,11 +1,11 @@
-﻿using Business.Domain;
-using Business.Ports;
-using Business.UseCases;
-using BusinessTest.DataProvider;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SalesAnalyzer.Application.Domain;
+using SalesAnalyzer.Application.Ports;
+using SalesAnalyzer.Application.Test.DataProvider;
+using SalesAnalyzer.Application.UseCases;
 
-namespace BusinessTest.UseCases
+namespace SalesAnalyzer.Application.Test.UseCases
 {
     [TestClass]
     public class SaleCsvProcessorTest

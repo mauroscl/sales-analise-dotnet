@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Business.Domain;
+using SalesAnalyzer.Application.Domain;
 
 // ReSharper disable All
 
-namespace BusinessTest.DataProvider
+namespace SalesAnalyzer.Application.Test.DataProvider
 {
     internal class SaleDataProvider
     {

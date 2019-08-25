@@ -1,8 +1,8 @@
 ﻿using System;
-using Business.Domain;
 using FileHelpers;
+using SalesAnalyzer.Application.Domain;
 
-namespace Adapters
+namespace SalesAnalyzer.Adapters
 {
     public class SalesFileHelperEngine : IFileHelperEngine
     {

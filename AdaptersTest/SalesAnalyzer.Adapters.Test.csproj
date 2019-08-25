@@ -14,7 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\SalesAnalyer.Application\SalesAnalyzer.Application.csproj" />
+    <ProjectReference Include="..\SalesAnalyzer.Adapters\SalesAnalyzer.Adapters.csproj" />
   </ItemGroup>
 
 </Project>

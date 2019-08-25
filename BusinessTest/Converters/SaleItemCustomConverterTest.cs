@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using Business.Converters;
-using Business.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SalesAnalyzer.Application.Converters;
+using SalesAnalyzer.Application.Domain;
 
-namespace BusinessTest.Converters
+namespace SalesAnalyzer.Application.Test.Converters
 {
     [TestClass]
     public class SaleItemCustomConverterTest

@@ -1,8 +1,8 @@
 ﻿using System;
-using Business.Domain;
-using Business.Ports;
+using SalesAnalyzer.Application.Domain;
+using SalesAnalyzer.Application.Ports;
 
-namespace Business.UseCases
+namespace SalesAnalyzer.Application.UseCases
 {
     public class SaleCsvProcessor : ISaleDataProcessor
     {

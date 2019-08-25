@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("BusinessTest")]
 
-namespace Business.Domain
+namespace SalesAnalyzer.Application.Domain
 {
     public class SalesStatisticsService : ISalesStatisticsService
     {

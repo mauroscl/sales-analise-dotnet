@@ -1,4 +1,4 @@
-﻿namespace SaleListenerConsoleApp
+﻿namespace SalesAnalyzer.ConsoleApp
 {
     internal interface IKafkaConsumer
     {

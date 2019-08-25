@@ -1,11 +1,12 @@
 ﻿using System;
-using Adapters;
-using Business.Domain;
-using Business.Ports;
-using Business.UseCases;
+using FileHelpers;
 using Microsoft.Extensions.DependencyInjection;
+using SalesAnalyzer.Adapters;
+using SalesAnalyzer.Application.Domain;
+using SalesAnalyzer.Application.Ports;
+using SalesAnalyzer.Application.UseCases;
 
-namespace SaleListenerConsoleApp
+namespace SalesAnalyzer.ConsoleApp
 {
     internal static class Program
     {

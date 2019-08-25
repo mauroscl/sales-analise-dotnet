@@ -1,6 +1,6 @@
-﻿using Business.Domain;
+﻿using SalesAnalyzer.Application.Domain;
 
-namespace Business.Ports
+namespace SalesAnalyzer.Application.Ports
 {
     public interface ISalesContextLoader
     {

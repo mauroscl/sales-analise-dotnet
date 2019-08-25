@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Business.Domain;
-using Business.Ports;
+using SalesAnalyzer.Application.Domain;
+using SalesAnalyzer.Application.Ports;
 
-namespace Adapters
+namespace SalesAnalyzer.Adapters
 {
     public class SalesContextLoader : ISalesContextLoader
     {

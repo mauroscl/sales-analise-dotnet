@@ -2,12 +2,12 @@
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Business.Domain;
 using FileHelpers;
+using SalesAnalyzer.Application.Domain;
 
-namespace Business.Converters
+namespace SalesAnalyzer.Application.Converters
 {
-    internal class SaleItemCustomConverter : ConverterBase
+    public class SaleItemCustomConverter : ConverterBase
     {
         public override object StringToField(string from)
         {

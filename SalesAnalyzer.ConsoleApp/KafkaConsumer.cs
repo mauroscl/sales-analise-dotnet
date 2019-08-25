@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Business.UseCases;
 using Confluent.Kafka;
+using SalesAnalyzer.Application.UseCases;
 
-namespace SaleListenerConsoleApp
+namespace SalesAnalyzer.ConsoleApp
 {
     internal class KafkaConsumer : IKafkaConsumer
     {

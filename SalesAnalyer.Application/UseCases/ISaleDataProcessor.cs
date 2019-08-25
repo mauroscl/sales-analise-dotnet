@@ -1,6 +1,6 @@
-﻿using Business.Domain;
+﻿using SalesAnalyzer.Application.Domain;
 
-namespace Business.UseCases
+namespace SalesAnalyzer.Application.UseCases
 {
     public interface ISaleDataProcessor
     {

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adapters;
-using Business.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SalesAnalyzer.Application.Domain;
 
-namespace AdaptersTest
+namespace SalesAnalyzer.Adapters.Test
 {
     [TestClass]
     public class SalesContextLoaderTest

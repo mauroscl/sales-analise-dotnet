@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Business.Converters;
 using FileHelpers;
+using SalesAnalyzer.Application.Converters;
 
-namespace Business.Domain
+namespace SalesAnalyzer.Application.Domain
 {
     [DelimitedRecord("ç")]
     public class Sale

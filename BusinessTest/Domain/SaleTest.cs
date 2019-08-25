@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Business.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SalesAnalyzer.Application.Domain;
 
-namespace BusinessTest.Domain
+namespace SalesAnalyzer.Application.Test.Domain
 {
     [TestClass]
     public class SaleTest

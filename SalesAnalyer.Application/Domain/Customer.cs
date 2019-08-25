@@ -1,6 +1,6 @@
 ﻿using FileHelpers;
 
-namespace Business.Domain
+namespace SalesAnalyzer.Application.Domain
 {
     [DelimitedRecord("ç")]
     public class Customer

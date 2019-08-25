@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Business.Domain
+namespace SalesAnalyzer.Application.Domain
 {
     public interface ISalesStatisticsService
     {
