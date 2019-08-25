@@ -15,7 +15,7 @@ namespace SalesProcessor.Adapters.Primary
 
         private static readonly string SaleAnalysisOutputTopic = "sales-analysis-output";
 
-        private static readonly string ConsumerGroup = "file-output-consumer";
+        private static readonly string ConsumerGroup = "sales-statistics-consumer";
 
         private static readonly string KafkaServer = "localhost:9092";
 
@@ -39,20 +39,11 @@ namespace SalesProcessor.Adapters.Primary
             {
                 consumer.Subscribe(SaleAnalysisOutputTopic);
 
-                //var cts = new CancellationTokenSource();
-                //Console.CancelKeyPress += (_, e) =>
-                //{
-                //    e.Cancel = true; // prevent the process from terminating.
-                //    cts.Cancel();
-                //};
-
                 try
                 {
-                    while (true)
+                    while (!cancellationToken.IsCancellationRequested)
                         try
                         {
-                            //var consumerRecord = consumer.Consume(cts.Token);
-                            //var consumerRecord = consumer.Consume();
                             var consumerRecord = consumer.Consume(cancellationToken);
                             var fileName = GetFileName(consumerRecord.Headers);
 

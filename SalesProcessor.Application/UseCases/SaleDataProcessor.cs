@@ -15,9 +15,9 @@ namespace SalesProcessor.Application.UseCases
         }
 
 
-        public void Process(string saleContent, IReadOnlyDictionary<string, string> headers)
+        public void Process(string saleContent, string saleKey)
         {
-            _integrator.SendSaleData(saleContent, headers);
+            _integrator.SendSaleData(saleContent, saleKey);
         }
     }
 }

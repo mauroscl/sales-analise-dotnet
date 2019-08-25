@@ -15,7 +15,7 @@ namespace SalesAnalyzer.Adapters.Primary
         private static readonly string SaleAnalysisInputTopic = "sales-analysis-input";
         private static readonly string SaleAnalysisOutputTopic = "sales-analysis-output";
 
-        private static readonly string ConsumerGroup = "file-input-consumer";
+        private static readonly string ConsumerGroup = "sales-data-consumer";
 
         private static readonly string CustomHeadersPrefix = "CTM";
         private static readonly string KafkaServer = "localhost:9092";
@@ -51,7 +51,7 @@ namespace SalesAnalyzer.Adapters.Primary
 
                 try
                 {
-                    while (true)
+                    while (!cancellationToken.IsCancellationRequested)
                         try
                         {
                             var cr = consumer.Consume(cancellationToken);

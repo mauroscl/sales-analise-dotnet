@@ -1,9 +1,8 @@
 ﻿using Confluent.Kafka;
 using SalesProcessor.Application.Ports.Driven;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using SalesProcessor.Adapters.Primary;
 
 namespace SalesProcessor.Adapters.Secondary
 {
@@ -15,28 +14,24 @@ namespace SalesProcessor.Adapters.Secondary
 
         public KafkaSalesAnalyserIntegrator()
         {
-            _producerConfig = new ProducerConfig {BootstrapServers = "localhost:9092"};
+            _producerConfig = new ProducerConfig
+            {
+                BootstrapServers = "localhost:9092"
+            };
         }
 
-        public void SendSaleData(string data, IReadOnlyDictionary<string, string> headers)
+        public void SendSaleData(string data, string saleKey)
         {
-
-            var kakfaHeaders = new Headers();
-
-            foreach (var kafkaHeader in headers.Select(h => new Header(h.Key, Encoding.ASCII.GetBytes(h.Value))))
+            
+            using (var producer = new ProducerBuilder<string, string>(_producerConfig).Build())
             {
-                kakfaHeaders.Add(kafkaHeader);
-            }
-
-            using (var producer = new ProducerBuilder<Null, string>(_producerConfig).Build())
-            {
+                var kafkaHeaders = new Headers {{KafkaConfig.FileNameHeader, Encoding.ASCII.GetBytes(saleKey)}};
 
                 producer.Produce(SaleAnalysisInputTopic,
-                    new Message<Null, string> {Value = data, Headers = kakfaHeaders});
-                producer.Flush(TimeSpan.FromSeconds(5));
+                    new Message<string, string> {Key = saleKey , Value = data, Headers = kafkaHeaders });
+                producer.Flush(TimeSpan.FromSeconds(30));
 
-                headers.TryGetValue("CTM_FILE_NAME", out var fileName);
-                Console.WriteLine($"Content of file {fileName} sent to kafka");
+                Console.WriteLine($"Content of file {saleKey} sent to kafka");
             }
         }
     }

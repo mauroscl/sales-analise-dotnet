@@ -17,9 +17,8 @@ namespace SalesProcessor.Adapters.Primary
 
         public void ProcessFile(string filePath)
         {
-            var headers = new Dictionary<string, string> { { KafkaConfig.FileNameHeader, Path.GetFileName(filePath) } };
             var fileContent = File.ReadAllText(filePath);
-            _saleDataProcessor.Process(fileContent, headers);
+            _saleDataProcessor.Process(fileContent, Path.GetFileName(filePath));
         }
 
     }
