@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace SalesProcessor.Application.UseCases
 {
-    public class SaleInputProcessor: ISaleInputProcessor
+    public class SaleDataProcessor: ISaleDataProcessor
     {
 
         private readonly ISalesAnalyserIntegrator _integrator;
 
-        public SaleInputProcessor(ISalesAnalyserIntegrator integrator)
+        public SaleDataProcessor(ISalesAnalyserIntegrator integrator)
         {
             _integrator = integrator;
         }

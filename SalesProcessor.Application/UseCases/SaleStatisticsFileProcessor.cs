@@ -5,13 +5,13 @@ using SalesProcessor.Application.Ports.Driver;
 
 namespace SalesProcessor.Application.UseCases
 {
-    public class SaleOutputFileProcessor : ISaleOutputProcessor
+    public class SaleStatisticsFileProcessor : ISaleStatisticsProcessor
     {
 
         private readonly IFileService _fileService;
         private readonly ISalesSummaryOutputService _salesSummaryOutputService;
 
-        public SaleOutputFileProcessor(IFileService fileService, ISalesSummaryOutputService salesSummaryOutputService)
+        public SaleStatisticsFileProcessor(IFileService fileService, ISalesSummaryOutputService salesSummaryOutputService)
         {
             _fileService = fileService;
             this._salesSummaryOutputService = salesSummaryOutputService;

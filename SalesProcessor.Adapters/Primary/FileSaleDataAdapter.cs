@@ -5,21 +5,21 @@ using System.IO;
 namespace SalesProcessor.Adapters.Primary
 {
 
-    public class FileSaleInputAdapter
+    public class FileSaleDataAdapter
     {
 
-        private readonly ISaleInputProcessor _saleInputProcessor;
+        private readonly ISaleDataProcessor _saleDataProcessor;
 
-        public FileSaleInputAdapter(ISaleInputProcessor saleInputProcessor)
+        public FileSaleDataAdapter(ISaleDataProcessor saleDataProcessor)
         {
-            this._saleInputProcessor = saleInputProcessor;
+            this._saleDataProcessor = saleDataProcessor;
         }
 
         public void ProcessFile(string filePath)
         {
             var headers = new Dictionary<string, string> { { KafkaConfig.FileNameHeader, Path.GetFileName(filePath) } };
             var fileContent = File.ReadAllText(filePath);
-            _saleInputProcessor.Process(fileContent, headers);
+            _saleDataProcessor.Process(fileContent, headers);
         }
 
     }

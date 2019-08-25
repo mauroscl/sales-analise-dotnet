@@ -28,7 +28,7 @@ namespace SalesProcessor.ConsoleApp
             var fileService = _serviceProvider.GetService<IFileService>();
             fileService.CreateApplicationDirectories(InputPath, OutputPath);
 
-            var kafkaSaleOutputAdapter = _serviceProvider.GetService<KafkaSaleOutputAdapter>();
+            var kafkaSaleOutputAdapter = _serviceProvider.GetService<KafkaSaleStatisticsAdapter>();
             kafkaSaleOutputAdapter.ConfigureConsumer(InputPath, OutputPath);
 
             ProcessExistingFiles(fileService);
@@ -43,10 +43,10 @@ namespace SalesProcessor.ConsoleApp
                 .AddTransient<IFileService, FileService>()
                 .AddTransient<ISalesSummaryOutputService, SalesSummaryOutputFileService>()
                 .AddTransient<ISalesAnalyserIntegrator, KafkaSalesAnalyserIntegrator>()
-                .AddTransient<ISaleInputProcessor, SaleInputProcessor>()
-                .AddTransient<ISaleOutputProcessor, SaleOutputFileProcessor>()
-                .AddTransient<FileSaleInputAdapter, FileSaleInputAdapter>()
-                .AddTransient<KafkaSaleOutputAdapter, KafkaSaleOutputAdapter>()
+                .AddTransient<ISaleDataProcessor, SaleDataProcessor>()
+                .AddTransient<ISaleStatisticsProcessor, SaleStatisticsFileProcessor>()
+                .AddTransient<FileSaleDataAdapter, FileSaleDataAdapter>()
+                .AddTransient<KafkaSaleStatisticsAdapter, KafkaSaleStatisticsAdapter>()
                 .BuildServiceProvider();
         }
 
@@ -81,7 +81,7 @@ namespace SalesProcessor.ConsoleApp
         private static void OnChanged(object source, FileSystemEventArgs e)
         {
             Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
-            var fileSaleProcessor = _serviceProvider.GetService<FileSaleInputAdapter>();
+            var fileSaleProcessor = _serviceProvider.GetService<FileSaleDataAdapter>();
             fileSaleProcessor.ProcessFile(e.FullPath);
 
 
@@ -90,7 +90,7 @@ namespace SalesProcessor.ConsoleApp
 
         private static void ProcessExistingFiles(IFileService fileService)
         {
-            var fileSaleProcessor = _serviceProvider.GetService<FileSaleInputAdapter>();
+            var fileSaleProcessor = _serviceProvider.GetService<FileSaleDataAdapter>();
 
             var unprocessedFiles = fileService.GetUnprocessedFiles(InputPath);
             foreach (var unprocessedFile in unprocessedFiles)

@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace SalesProcessor.Adapters.Primary
 {
-    public class KafkaSaleOutputAdapter
+    public class KafkaSaleStatisticsAdapter
     {
 
         private static readonly string SaleAnalysisOutputTopic = "sales-analysis-output";
@@ -20,10 +20,10 @@ namespace SalesProcessor.Adapters.Primary
 
         private readonly ConsumerConfig _consumerConfig;
 
-        private readonly ISaleOutputProcessor _saleOutputProcessor;
-        public KafkaSaleOutputAdapter(ISaleOutputProcessor saleOutputProcessor)
+        private readonly ISaleStatisticsProcessor _saleStatisticsProcessor;
+        public KafkaSaleStatisticsAdapter(ISaleStatisticsProcessor saleStatisticsProcessor)
         {
-            _saleOutputProcessor = saleOutputProcessor;
+            _saleStatisticsProcessor = saleStatisticsProcessor;
             _consumerConfig = new ConsumerConfig
             {
                 AutoOffsetReset = AutoOffsetReset.Earliest,
@@ -55,7 +55,7 @@ namespace SalesProcessor.Adapters.Primary
 
                             var salesSummary = JsonConvert.DeserializeObject<SalesSummary>(consumerRecord.Value);
 
-                            _saleOutputProcessor.PersistStatistics(salesSummary, fileName, fileInputPath, fileOutputPath);
+                            _saleStatisticsProcessor.PersistStatistics(salesSummary, fileName, fileInputPath, fileOutputPath);
 
                             Console.WriteLine($"File {fileName} processed");
                         }
