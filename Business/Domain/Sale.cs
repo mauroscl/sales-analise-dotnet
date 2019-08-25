@@ -5,7 +5,6 @@ using FileHelpers;
 
 namespace Business.Domain
 {
-
     [DelimitedRecord("ç")]
     public class Sale
     {
@@ -13,7 +12,7 @@ namespace Business.Domain
         {
             SaleId = saleId;
             Salesman = salesman;
-            this.Items = new List<SaleItem>();
+            Items = new List<SaleItem>();
         }
 
         protected Sale()
@@ -22,16 +21,17 @@ namespace Business.Domain
 
         private string RowIdentifier { get; set; }
         public string SaleId { get; protected set; }
+
         [FieldConverter(typeof(SaleItemCustomConverter))]
         public IEnumerable<SaleItem> Items { get; protected set; }
+
         public string Salesman { get; protected set; }
+
+        public double Total => Items.Sum(item => item.Total);
 
         public void SetItems(IEnumerable<SaleItem> itens)
         {
-            this.Items = itens;
+            Items = itens;
         }
-
-        public double Total => this.Items.Sum(item => item.Total);
-
     }
 }

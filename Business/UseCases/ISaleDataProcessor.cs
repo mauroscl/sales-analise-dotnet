@@ -1,7 +1,9 @@
-﻿namespace Business.UseCases
+﻿using Business.Domain;
+
+namespace Business.UseCases
 {
     public interface ISaleDataProcessor
     {
-        void Process(string inputFile, string outputPath);
+        SalesSummary Process(string inputFile, string outputPath);
     }
 }

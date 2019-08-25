@@ -19,7 +19,6 @@ namespace BusinessTest.Converters
             {
                 _saleItemCustomConverter.StringToField("10-20-30");
                 Assert.Fail("Must throw Exception because items had no brackets");
-
             }
             catch (Exception e)
             {
@@ -35,19 +34,18 @@ namespace BusinessTest.Converters
                 _saleItemCustomConverter.StringToField("[20-30]");
 
                 Assert.Fail("Must throw Exception because item has less than three values");
-
             }
             catch (Exception e)
             {
                 Assert.AreEqual("Sale item must have 3 values: 20-30", e.Message);
             }
-
         }
 
         [TestMethod]
         public void MustConvertStringToSaleItem()
         {
-            var saleItems = ((IList) _saleItemCustomConverter.StringToField("[1-20-30,2-30-50.1]")).Cast<SaleItem>().ToList();
+            var saleItems = ((IList) _saleItemCustomConverter.StringToField("[1-20-30,2-30-50.1]")).Cast<SaleItem>()
+                .ToList();
             Assert.AreEqual(2, saleItems.Count);
 
             var saleItem1 = saleItems.ElementAt(0);
@@ -59,8 +57,6 @@ namespace BusinessTest.Converters
             Assert.AreEqual("2", saleItem2.Id);
             Assert.AreEqual(30, saleItem2.Quantity);
             Assert.AreEqual(50.1, saleItem2.Price);
-
         }
-
     }
 }

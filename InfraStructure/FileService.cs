@@ -1,5 +1,4 @@
-﻿using Business.Ports;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,6 +7,7 @@ namespace InfraStructure
     public class FileService : IFileService
     {
         private const string ProcessedDirectory = "processed";
+
         public IList<string> GetUnprocessedFiles(string inputDirectory)
         {
             return Directory.GetFiles(inputDirectory, "*.dat");
@@ -37,7 +37,8 @@ namespace InfraStructure
 
         public string GetStatisticsFileName(string inputFile, string outputPath)
         {
-            var destinationFileName = Path.GetFileNameWithoutExtension(inputFile) + ".done" + Path.GetExtension(inputFile);
+            var destinationFileName =
+                Path.GetFileNameWithoutExtension(inputFile) + ".done" + Path.GetExtension(inputFile);
             return Path.Combine(outputPath, destinationFileName);
         }
     }

@@ -1,14 +1,30 @@
 ﻿using System;
+using Adapters;
+using Business.Domain;
+using Business.Ports;
+using Business.UseCases;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SaleListenerConsoleApp
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Consumer - Hello World!");
-            KafkaConsumer.Consume();
-        }
 
+            Console.WriteLine("Consumer - Hello World!");
+
+            var serviceProvider = new ServiceCollection()
+                .AddTransient<ISaleDataProcessor, SaleCsvProcessor>()
+                .AddTransient<ISalesContextLoader, SalesContextLoader>()
+                .AddTransient<ISalesStatisticsService, SalesStatisticsService>()
+                .AddTransient<IFileHelperEngine, SalesFileHelperEngine>()
+                .AddTransient<IKafkaConsumer, KafkaConsumer>()
+                .BuildServiceProvider();
+
+            var kafkaConsumer = serviceProvider.GetService<IKafkaConsumer>();
+            kafkaConsumer.Consume();
+
+        }
     }
 }

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Business;
+using Adapters;
 using Business.Domain;
-using InfraStructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace InfraStructureTest
+namespace AdaptersTest
 {
     [TestClass]
     public class SalesContextLoaderTest
@@ -27,7 +24,6 @@ namespace InfraStructureTest
             Assert.IsFalse(salesContext.Sales.Any());
 
             fileHelperEngineMock.Verify(x => x.ReadCsvFile(It.IsAny<string>()), Times.Once);
-
         }
 
         [TestMethod]
@@ -42,7 +38,7 @@ namespace InfraStructureTest
             };
             var sale = new Sale("001", "Mauro");
             var saleItem = new SaleItem("001", 10, 20);
-            sale.SetItems(new List<SaleItem>{saleItem});
+            sale.SetItems(new List<SaleItem> {saleItem});
 
             var objects = new object[] {salesman, customer, sale};
 
@@ -58,7 +54,5 @@ namespace InfraStructureTest
 
             fileHelperEngineMock.Verify(x => x.ReadCsvFile(It.IsAny<string>()), Times.Once);
         }
-
-
     }
 }

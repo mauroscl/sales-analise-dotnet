@@ -8,6 +8,7 @@ namespace Business.Domain
         public SaleItem()
         {
         }
+
         public SaleItem(string id, double quantity, double price)
         {
             Id = id;
@@ -15,7 +16,7 @@ namespace Business.Domain
             Price = price;
         }
 
-        public string Id {get; protected set; }
+        public string Id { get; protected set; }
         public double Quantity { get; protected set; }
         public double Price { get; protected set; }
 

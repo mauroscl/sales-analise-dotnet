@@ -10,6 +10,7 @@ namespace BusinessTest.Domain
     public class SalesStatisticsServiceTest
     {
         private readonly SalesStatisticsService _service = new SalesStatisticsService();
+
         [TestMethod]
         public void MustReturnEmptyListForWorstSellersWhenNoSalesAvailable()
         {
@@ -20,7 +21,7 @@ namespace BusinessTest.Domain
         [TestMethod]
         public void MustReturnNameOfWorstSeller()
         {
-            IList<Sale> sales = SaleDataProvider.GenerateTwoSales();
+            var sales = SaleDataProvider.GenerateTwoSales();
             var worstSellers = _service.CalculateWorstSellers(sales);
             Assert.AreEqual(1, worstSellers.Count);
             Assert.AreEqual("João", worstSellers.First());
@@ -34,7 +35,6 @@ namespace BusinessTest.Domain
             Assert.AreEqual(2, worstSellers.Count);
             Assert.IsTrue(worstSellers.Contains("João"));
             Assert.IsTrue(worstSellers.Contains("Mauro"));
-
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace BusinessTest.Domain
         [TestMethod]
         public void MustdReturnIdOfMostExpensiveSale()
         {
-            IList<Sale> sales = SaleDataProvider.GenerateTwoSales();
+            var sales = SaleDataProvider.GenerateTwoSales();
             var mostExpensiveSales = _service.CalculateMostExpensiveSales(sales);
             Assert.AreEqual(1, mostExpensiveSales.Count);
             Assert.AreEqual("01", mostExpensiveSales.First());
@@ -62,6 +62,5 @@ namespace BusinessTest.Domain
             Assert.IsTrue(mostExpensiveSales.Contains("02"));
             Assert.IsTrue(mostExpensiveSales.Contains("03"));
         }
-
     }
 }

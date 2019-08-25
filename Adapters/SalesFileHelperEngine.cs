@@ -1,9 +1,8 @@
 ﻿using System;
-using Business;
 using Business.Domain;
 using FileHelpers;
 
-namespace InfraStructure
+namespace Adapters
 {
     public class SalesFileHelperEngine : IFileHelperEngine
     {
@@ -16,15 +15,26 @@ namespace InfraStructure
             var engine = new MultiRecordEngine(typeof(Salesman),
                     typeof(Customer),
                     typeof(Sale))
-                { RecordSelector = CustomSelector };
+                {RecordSelector = CustomSelector};
+
 
             return engine.ReadFile(filePath);
+        }
 
+        public object[] ReadCsv(string content)
+        {
+            var engine = new MultiRecordEngine(typeof(Salesman),
+                    typeof(Customer),
+                    typeof(Sale))
+                {RecordSelector = CustomSelector};
+
+
+            return engine.ReadString(content);
         }
 
         private Type CustomSelector(MultiRecordEngine engine, string recordLine)
         {
-            if (String.IsNullOrEmpty(recordLine) || recordLine.Length < 3)
+            if (string.IsNullOrEmpty(recordLine) || recordLine.Length < 3)
                 return null;
 
             var typeIdentifier = recordLine.Substring(0, 3);

@@ -6,9 +6,8 @@ namespace Business.Domain
     public class Customer
     {
         private string RowIdentifier { get; set; }
-        public string Cnpj { get; protected internal set; }
-        public string Name { get; protected internal set; }
-        public string BusinessArea { get; protected internal set; }
-
+        public string Cnpj { get; set; }
+        public string Name { get; set; }
+        public string BusinessArea { get; set; }
     }
 }

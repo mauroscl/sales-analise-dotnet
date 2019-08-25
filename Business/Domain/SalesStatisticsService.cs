@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -9,12 +8,9 @@ namespace Business.Domain
 {
     public class SalesStatisticsService : ISalesStatisticsService
     {
-        public IList<String> CalculateWorstSellers(IList<Sale> sales)
+        public IList<string> CalculateWorstSellers(IList<Sale> sales)
         {
-            if (!sales.Any())
-            {
-                return new List<string>();
-            }
+            if (!sales.Any()) return new List<string>();
             var salesBySalesman = sales
                 .GroupBy(sale => sale.Salesman)
                 .Select(group => new
@@ -23,20 +19,17 @@ namespace Business.Domain
                     Total = group.Sum(sale => sale.Total)
                 }).ToList();
 
-            double minTotal = salesBySalesman.Min(x => x.Total);
+            var minTotal = salesBySalesman.Min(x => x.Total);
 
             return salesBySalesman
                 .Where(sale => sale.Total.Equals(minTotal))
                 .Select(sale => sale.Salesman).ToList();
         }
 
-        public IList<String> CalculateMostExpensiveSales(IList<Sale> sales)
+        public IList<string> CalculateMostExpensiveSales(IList<Sale> sales)
         {
-            if (!sales.Any())
-            {
-                return new List<string>();
-            }
-            double maxTotal = sales.Max(sale => sale.Total);
+            if (!sales.Any()) return new List<string>();
+            var maxTotal = sales.Max(sale => sale.Total);
             return sales
                 .Where(sale => sale.Total.Equals(maxTotal))
                 .Select(sale => sale.SaleId).ToList();

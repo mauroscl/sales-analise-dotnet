@@ -1,10 +1,9 @@
-﻿using Business;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Business.Domain;
 using Business.Ports;
 
-namespace InfraStructure
+namespace Adapters
 {
     public class SalesContextLoader : ISalesContextLoader
     {
@@ -18,6 +17,12 @@ namespace InfraStructure
         public SalesContext Load(string filePath)
         {
             var records = _fileHelperEngine.ReadCsvFile(filePath);
+            return TransformToSalesContext(records);
+        }
+
+        public SalesContext LoadCsv(string csvContent)
+        {
+            var records = _fileHelperEngine.ReadCsv(csvContent);
             return TransformToSalesContext(records);
         }
 
@@ -40,8 +45,6 @@ namespace InfraStructure
                 : new List<Sale>();
 
             return new SalesContext(amountSalesman, amountCustomer, sales);
-
         }
-
     }
 }

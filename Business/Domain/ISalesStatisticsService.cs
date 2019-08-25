@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Business.Domain
 {
     public interface ISalesStatisticsService
     {
-        IList<String> CalculateWorstSellers(IList<Sale> sales);
-        IList<String> CalculateMostExpensiveSales(IList<Sale> sales);
+        IList<string> CalculateWorstSellers(IList<Sale> sales);
+        IList<string> CalculateMostExpensiveSales(IList<Sale> sales);
     }
 }
