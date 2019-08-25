@@ -1,7 +1,9 @@
-﻿namespace SalesAnalyzer.Adapters.Primary
+﻿using System.Threading;
+
+namespace SalesAnalyzer.Adapters.Primary
 {
     public interface ISalesAnalyzerPrimaryAdapter
     {
-        void ConfigureConsumer();
+        void ConfigureConsumer(CancellationToken cancellationToken);
     }
 }

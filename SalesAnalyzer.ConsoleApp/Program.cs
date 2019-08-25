@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using SalesAnalyzer.Adapters.Primary;
 using SalesAnalyzer.Adapters.Secondary;
@@ -24,8 +25,16 @@ namespace SalesAnalyzer.ConsoleApp
                 .AddTransient<ISalesAnalyzerPrimaryAdapter, KafkaSalesAnalyzerAdapter>()
                 .BuildServiceProvider();
 
+            var cts = new CancellationTokenSource();
+            Console.CancelKeyPress += (_, e) =>
+            {
+                e.Cancel = true; // prevent the process from terminating.
+                cts.Cancel();
+            };
+
+
             var kafkaConsumer = serviceProvider.GetService<ISalesAnalyzerPrimaryAdapter>();
-            kafkaConsumer.ConfigureConsumer();
+            kafkaConsumer.ConfigureConsumer(cts.Token);
 
         }
     }

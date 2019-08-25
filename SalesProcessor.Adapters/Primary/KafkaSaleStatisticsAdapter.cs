@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace SalesProcessor.Adapters.Primary
@@ -32,25 +33,27 @@ namespace SalesProcessor.Adapters.Primary
             };
         }
 
-        public void ConfigureConsumer(string fileInputPath, string fileOutputPath)
+        public void ConfigureConsumer(string fileInputPath, string fileOutputPath, CancellationToken cancellationToken)
         {
             using (var consumer = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build())
             {
                 consumer.Subscribe(SaleAnalysisOutputTopic);
 
-                var cts = new CancellationTokenSource();
-                Console.CancelKeyPress += (_, e) =>
-                {
-                    e.Cancel = true; // prevent the process from terminating.
-                    cts.Cancel();
-                };
+                //var cts = new CancellationTokenSource();
+                //Console.CancelKeyPress += (_, e) =>
+                //{
+                //    e.Cancel = true; // prevent the process from terminating.
+                //    cts.Cancel();
+                //};
 
                 try
                 {
                     while (true)
                         try
                         {
-                            var consumerRecord = consumer.Consume(cts.Token);
+                            //var consumerRecord = consumer.Consume(cts.Token);
+                            //var consumerRecord = consumer.Consume();
+                            var consumerRecord = consumer.Consume(cancellationToken);
                             var fileName = GetFileName(consumerRecord.Headers);
 
                             var salesSummary = JsonConvert.DeserializeObject<SalesSummary>(consumerRecord.Value);

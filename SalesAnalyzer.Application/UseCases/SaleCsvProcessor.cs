@@ -18,7 +18,6 @@ namespace SalesAnalyzer.Application.UseCases
 
         public SalesSummary Process(string inputFile)
         {
-            Console.WriteLine("Processing file: " + inputFile);
 
             var salesContext = _salesContextLoader.LoadCsv(inputFile);
 

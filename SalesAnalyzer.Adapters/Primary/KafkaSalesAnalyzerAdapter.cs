@@ -43,25 +43,18 @@ namespace SalesAnalyzer.Adapters.Primary
 
         }
 
-        public void ConfigureConsumer()
+        public void ConfigureConsumer(CancellationToken cancellationToken)
         {
             using (var consumer = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build())
             {
                 consumer.Subscribe(SaleAnalysisInputTopic);
-
-                var cts = new CancellationTokenSource();
-                Console.CancelKeyPress += (_, e) =>
-                {
-                    e.Cancel = true; // prevent the process from terminating.
-                    cts.Cancel();
-                };
 
                 try
                 {
                     while (true)
                         try
                         {
-                            var cr = consumer.Consume(cts.Token);
+                            var cr = consumer.Consume(cancellationToken);
                             var salesSummary = _saleDataProcessor.Process(cr.Value);
                             SendResponse(salesSummary, cr.Headers);
                         }

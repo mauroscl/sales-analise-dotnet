@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using InfraStructure;
 using Microsoft.Extensions.DependencyInjection;
 using SalesProcessor.Adapters.Primary;
@@ -21,19 +23,30 @@ namespace SalesProcessor.ConsoleApp
 
         private static void Main(string[] args)
         {
-            Console.WriteLine("Base Path: " + AppDomain.CurrentDomain.BaseDirectory);
+
+            Console.WriteLine("Running Sales Processor...");
 
             RegistryServices();
 
             var fileService = _serviceProvider.GetService<IFileService>();
             fileService.CreateApplicationDirectories(InputPath, OutputPath);
 
+            var cts = new CancellationTokenSource();
+            Console.CancelKeyPress += (_, e) =>
+            {
+                e.Cancel = true; // prevent the process from terminating.
+                cts.Cancel();
+            };
+
+
             var kafkaSaleOutputAdapter = _serviceProvider.GetService<KafkaSaleStatisticsAdapter>();
-            kafkaSaleOutputAdapter.ConfigureConsumer(InputPath, OutputPath);
+            Task.Run(() => kafkaSaleOutputAdapter.ConfigureConsumer(InputPath, OutputPath, cts.Token), cts.Token);
 
-            ProcessExistingFiles(fileService);
+            //ProcessExistingFiles(fileService);
 
-            InitializeFileWatcher();
+            //await Task.Run(() => InitializeFileWatcher(cts.Token), cts.Token) ;
+
+            InitializeFileWatcher(cts.Token);
         }
 
         private static void RegistryServices()
@@ -51,7 +64,7 @@ namespace SalesProcessor.ConsoleApp
         }
 
 
-        private static void InitializeFileWatcher()
+        private static void InitializeFileWatcher(CancellationToken cancellationToken)
         {
             // Create a new FileSystemWatcher and set its properties.
             using (var watcher = new FileSystemWatcher())
@@ -68,12 +81,16 @@ namespace SalesProcessor.ConsoleApp
                 // Begin watching.
                 watcher.EnableRaisingEvents = true;
 
-                // Wait for the user to quit the program.
-                Console.WriteLine("Press 'q' to quit the application.");
-                while (Console.Read() != 'q')
-                {
+                //// Wait for the user to quit the program.
+                //Console.WriteLine("Press 'q' to quit the application.");
+                //while (Console.Read() != 'q')
+                //{
 
-                }
+                //}
+
+                Console.WriteLine($"Watching folder {Path.GetFullPath(watcher.Path)}");
+
+                while (!cancellationToken.IsCancellationRequested) ;
             }
         }
 

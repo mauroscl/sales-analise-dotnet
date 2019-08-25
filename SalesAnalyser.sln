@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProcessor.Adapters", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.ConsoleApp", "SalesAnalyzer.ConsoleApp\SalesAnalyzer.ConsoleApp.csproj", "{A9DCC6EA-5198-444C-9865-C7DC866751DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Application", "SalesAnalyer.Application\SalesAnalyzer.Application.csproj", "{7A7917FD-E001-49C8-B082-EE973BF72328}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Application", "SalesAnalyzer.Application\SalesAnalyzer.Application.csproj", "{7A7917FD-E001-49C8-B082-EE973BF72328}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Adapters", "SalesAnalyzer.Adapters\SalesAnalyzer.Adapters.csproj", "{065F8AEE-4E06-4B4D-B94D-1CC176CF7B4D}"
 EndProject

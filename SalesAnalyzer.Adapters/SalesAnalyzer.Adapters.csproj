@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SalesAnalyer.Application\SalesAnalyzer.Application.csproj" />
+    <ProjectReference Include="..\SalesAnalyzer.Application\SalesAnalyzer.Application.csproj" />
   </ItemGroup>
 
 </Project>
