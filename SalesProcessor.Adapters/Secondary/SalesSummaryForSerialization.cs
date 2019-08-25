@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using FileHelpers;
-using InfraStructure.Converters;
+using SalesProcessor.Application.UseCases;
 
-namespace InfraStructure
+namespace SalesProcessor.Adapters.Secondary
 {
     [DelimitedRecord(";")]
-    public class SalesSummary
+    public class SalesSummaryForSerialization
     {
-        public SalesSummary(int amountSalesman, int amountCustomer, IList<string> worstSellers,
+        private SalesSummaryForSerialization(int amountSalesman, int amountCustomer, IList<string> worstSellers,
             IList<string> mostExpensiveSales)
         {
             AmountSalesman = amountSalesman;
@@ -16,8 +17,14 @@ namespace InfraStructure
             MostExpensiveSales = mostExpensiveSales;
         }
 
-        protected SalesSummary()
+        protected SalesSummaryForSerialization()
         {
+        }
+
+        public static SalesSummaryForSerialization FromSaleSummary(SalesSummary salesSummary)
+        {
+            return new SalesSummaryForSerialization(salesSummary.AmountSalesman, salesSummary.AmountCustomer, 
+                salesSummary.WorstSellers, salesSummary.MostExpensiveSales);
         }
 
         public int AmountSalesman { get; }

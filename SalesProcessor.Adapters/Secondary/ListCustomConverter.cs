@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FileHelpers;
 
-namespace InfraStructure.Converters
+namespace SalesProcessor.Adapters.Secondary
 {
     public class ListCustomConverter : ConverterBase
     {

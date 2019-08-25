@@ -1,7 +1,7 @@
-using InfraStructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SalesProcessor.Adapters.Primary;
 
-namespace InfraStructureTest
+namespace SalesProcesssor.Adapters.Test.Primary
 {
     [TestClass]
     public class FileServiceTest

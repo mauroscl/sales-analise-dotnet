@@ -2,8 +2,13 @@
 using System.IO;
 using InfraStructure;
 using Microsoft.Extensions.DependencyInjection;
+using SalesProcessor.Adapters.Primary;
+using SalesProcessor.Adapters.Secondary;
+using SalesProcessor.Application.Ports.Driven;
+using SalesProcessor.Application.Ports.Driver;
+using SalesProcessor.Application.UseCases;
 
-namespace SalesAnalyser
+namespace SalesProcessor.ConsoleApp
 {
     internal class Program
     {
@@ -32,9 +37,12 @@ namespace SalesAnalyser
         private static void RegistryServices()
         {
             _serviceProvider = new ServiceCollection()
-                .AddTransient<ISalesSummaryOutputService, SalesSummaryOutputFileService>()
+
                 .AddTransient<IFileService, FileService>()
-                .AddTransient<IKafkaProducer, KafkaProducer>()
+                .AddTransient<ISalesSummaryOutputService, SalesSummaryOutputFileService>()
+                .AddTransient<ISalesAnalyserIntegrator, KafkaSalesAnalyserIntegrator>()
+                .AddTransient<ISaleInputProcessor, SaleInputProcessor>()
+                .AddTransient<FileSaleProcessor, FileSaleProcessor>()
                 .BuildServiceProvider();
         }
 
@@ -60,6 +68,7 @@ namespace SalesAnalyser
                 Console.WriteLine("Press 'q' to quit the application.");
                 while (Console.Read() != 'q')
                 {
+
                 }
             }
         }
@@ -68,26 +77,22 @@ namespace SalesAnalyser
         private static void OnChanged(object source, FileSystemEventArgs e)
         {
             Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
-            //ISaleDataProcessor saleDataProcessor = _serviceProvider.GetService<ISaleDataProcessor>();
-            //saleDataProcessor.Process(e.FullPath, OutputPath);
-            var kafkaProducer = _serviceProvider.GetService<IKafkaProducer>();
-            kafkaProducer.SendSale(e.FullPath);
+            var fileSaleProcessor = _serviceProvider.GetService<FileSaleProcessor>();
+            fileSaleProcessor.ProcessFile(e.FullPath);
 
-            //TODO colocar no consumer de resposta
-            //var outputFilePath = _fileService.GetStatisticsFileName(inputFile, outputPath);
-            //_salesSummaryOutputService.Write(outputFilePath, salesSummary);
-
-            //_fileService.MoveProcessedFile(inputFile);
 
             //Console.WriteLine("File Processed: " + inputFile);
         }
 
         private static void ProcessExistingFiles(IFileService fileService)
         {
-            var kafkaProducer = _serviceProvider.GetService<IKafkaProducer>();
+            var fileSaleProcessor = _serviceProvider.GetService<FileSaleProcessor>();
 
             var unprocessedFiles = fileService.GetUnprocessedFiles(InputPath);
-            foreach (var unprocessedFile in unprocessedFiles) kafkaProducer.SendSale(unprocessedFile);
+            foreach (var unprocessedFile in unprocessedFiles)
+            {
+                fileSaleProcessor.ProcessFile(unprocessedFile);
+            }
         }
     }
 }

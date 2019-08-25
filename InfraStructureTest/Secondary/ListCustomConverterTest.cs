@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using InfraStructure.Converters;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SalesProcessor.Adapters.Secondary;
 
-namespace InfraStructureTest.Converters
+namespace SalesProcesssor.Adapters.Test.Secondary
 {
     [TestClass]
     public class ListCustomConverterTest

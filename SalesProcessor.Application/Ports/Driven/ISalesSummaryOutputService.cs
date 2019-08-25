@@ -1,4 +1,6 @@
-﻿namespace InfraStructure
+﻿using SalesProcessor.Application.UseCases;
+
+namespace InfraStructure
 {
     public interface ISalesSummaryOutputService
     {

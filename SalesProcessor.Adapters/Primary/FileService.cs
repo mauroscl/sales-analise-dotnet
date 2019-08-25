@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using SalesProcessor.Application;
+using SalesProcessor.Application.Ports.Driven;
 
-namespace InfraStructure
+namespace SalesProcessor.Adapters.Primary
 {
     public class FileService : IFileService
     {
@@ -19,18 +21,18 @@ namespace InfraStructure
             Directory.CreateDirectory(outputPath);
         }
 
-        public void MoveProcessedFile(string inputFile)
+        public void MoveProcessedFile(string inputFileFullPath)
         {
-            var destinationProcessedFile = Path.Combine(Path.GetDirectoryName(inputFile), ProcessedDirectory,
-                Path.GetFileName(inputFile));
+            var destinationProcessedFile = Path.Combine(Path.GetDirectoryName(inputFileFullPath), ProcessedDirectory,
+                Path.GetFileName(inputFileFullPath));
 
             try
             {
-                File.Move(inputFile, destinationProcessedFile);
+                File.Move(inputFileFullPath, destinationProcessedFile);
             }
             catch (IOException e)
             {
-                Console.WriteLine("Can't move the file to processed destination folder. Input file: " + inputFile);
+                Console.WriteLine("Can't move the file to processed destination folder. Input file: " + inputFileFullPath);
                 Console.WriteLine(e.Message);
             }
         }
@@ -41,5 +43,7 @@ namespace InfraStructure
                 Path.GetFileNameWithoutExtension(inputFile) + ".done" + Path.GetExtension(inputFile);
             return Path.Combine(outputPath, destinationFileName);
         }
+
+ 
     }
 }
