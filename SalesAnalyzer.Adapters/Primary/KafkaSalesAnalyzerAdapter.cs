@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Confluent.Kafka;
+using SalesAnalyzer.Application.Domain;
+using SalesAnalyzer.Application.Ports.Driver;
+using System;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Confluent.Kafka;
-using SalesAnalyzer.Application.Domain;
-using SalesAnalyzer.Application.Ports.Driver;
+using Newtonsoft.Json;
 
 namespace SalesAnalyzer.Adapters.Primary
 {
@@ -82,16 +82,13 @@ namespace SalesAnalyzer.Adapters.Primary
         {
             var customHeaders = CopyCustomHeaders(headers);
 
-            
+            var serializeSaleSummary = JsonConvert.SerializeObject(salesSummary, Formatting.Indented);
 
-            var producerBuilder = new ProducerBuilder<Null, SalesSummary>(_producerConfig);
-            producerBuilder.SetValueSerializer(Serializers.ByteArray);
-            using (var producer = producerBuilder.Build())
+            using (var producer = new ProducerBuilder<Null, string>(_producerConfig).Build())
             {
 
-
                 producer.Produce(SaleAnalysisOutputTopic,
-                    new Message<Null, SalesSummary> { Value = salesSummary, Headers = customHeaders });
+                    new Message<Null, string> { Value = serializeSaleSummary, Headers = customHeaders });
                 producer.Flush(TimeSpan.FromSeconds(5));
 
                 var fileName = Encoding.ASCII.GetString(headers.FirstOrDefault(h => h.Key.Equals("CTM_FILE_NAME"))?.GetValueBytes()) ;

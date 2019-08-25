@@ -5,7 +5,7 @@ using SalesProcessor.Application.Ports.Driver;
 
 namespace SalesProcessor.Application.UseCases
 {
-    class SaleOutputFileProcessor : ISaleOutputProcessor
+    public class SaleOutputFileProcessor : ISaleOutputProcessor
     {
 
         private readonly IFileService _fileService;
@@ -19,7 +19,7 @@ namespace SalesProcessor.Application.UseCases
 
         public void PersistStatistics(SalesSummary salesSummary, string fileName, string inputPath, string outputPath)
         {
-            var outputFilePath = _fileService.GetStatisticsFileName(fileName, fileName);
+            var outputFilePath = _fileService.GetStatisticsFileName(fileName, outputPath);
             _salesSummaryOutputService.Write(outputFilePath, salesSummary);
 
             var inputFileFullPath = Path.Combine(inputPath, fileName);

@@ -42,7 +42,7 @@ namespace SalesAnalyzer.Application.Test.UseCases
 
             var saleCsvProcessor = new SaleCsvProcessor(salesContextLoaderMock.Object, new SalesStatisticsService());
 
-            saleCsvProcessor.Process("data/in/teste.dat", "data/out");
+            saleCsvProcessor.Process("data/in/teste.dat");
 
             salesContextLoaderMock.Verify(x => x.LoadCsv(It.IsAny<string>()), Times.Once);
 

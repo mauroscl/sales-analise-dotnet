@@ -5,10 +5,11 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace SalesProcessor.Adapters.Primary
 {
-    class KafkaSaleOutputAdapter
+    public class KafkaSaleOutputAdapter
     {
 
         private static readonly string SaleAnalysisOutputTopic = "sales-analysis-output";
@@ -33,7 +34,7 @@ namespace SalesProcessor.Adapters.Primary
 
         public void ConfigureConsumer(string fileInputPath, string fileOutputPath)
         {
-            using (var consumer = new ConsumerBuilder<Ignore, SalesSummary>(_consumerConfig).Build())
+            using (var consumer = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build())
             {
                 consumer.Subscribe(SaleAnalysisOutputTopic);
 
@@ -52,7 +53,9 @@ namespace SalesProcessor.Adapters.Primary
                             var consumerRecord = consumer.Consume(cts.Token);
                             var fileName = GetFileName(consumerRecord.Headers);
 
-                            _saleOutputProcessor.PersistStatistics(consumerRecord.Value, fileName, fileInputPath, fileOutputPath);
+                            var salesSummary = JsonConvert.DeserializeObject<SalesSummary>(consumerRecord.Value);
+
+                            _saleOutputProcessor.PersistStatistics(salesSummary, fileName, fileInputPath, fileOutputPath);
 
                             Console.WriteLine($"File {fileName} processed");
                         }

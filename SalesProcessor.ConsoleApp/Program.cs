@@ -10,7 +10,7 @@ using SalesProcessor.Application.UseCases;
 
 namespace SalesProcessor.ConsoleApp
 {
-    internal class Program
+    internal static class Program
     {
         //private const string InputPath = "d:\\data\\in";
         //private const string OutputPath = "d:\\data\\out";
@@ -26,8 +26,10 @@ namespace SalesProcessor.ConsoleApp
             RegistryServices();
 
             var fileService = _serviceProvider.GetService<IFileService>();
-
             fileService.CreateApplicationDirectories(InputPath, OutputPath);
+
+            var kafkaSaleOutputAdapter = _serviceProvider.GetService<KafkaSaleOutputAdapter>();
+            kafkaSaleOutputAdapter.ConfigureConsumer(InputPath, OutputPath);
 
             ProcessExistingFiles(fileService);
 
@@ -42,7 +44,9 @@ namespace SalesProcessor.ConsoleApp
                 .AddTransient<ISalesSummaryOutputService, SalesSummaryOutputFileService>()
                 .AddTransient<ISalesAnalyserIntegrator, KafkaSalesAnalyserIntegrator>()
                 .AddTransient<ISaleInputProcessor, SaleInputProcessor>()
+                .AddTransient<ISaleOutputProcessor, SaleOutputFileProcessor>()
                 .AddTransient<FileSaleInputAdapter, FileSaleInputAdapter>()
+                .AddTransient<KafkaSaleOutputAdapter, KafkaSaleOutputAdapter>()
                 .BuildServiceProvider();
         }
 
