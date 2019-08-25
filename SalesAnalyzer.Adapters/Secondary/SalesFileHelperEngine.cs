@@ -2,7 +2,7 @@
 using FileHelpers;
 using SalesAnalyzer.Application.Domain;
 
-namespace SalesAnalyzer.Adapters
+namespace SalesAnalyzer.Adapters.Secondary
 {
     public class SalesFileHelperEngine : IFileHelperEngine
     {

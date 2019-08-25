@@ -1,6 +1,7 @@
 ﻿using System;
 using SalesAnalyzer.Application.Domain;
-using SalesAnalyzer.Application.Ports;
+using SalesAnalyzer.Application.Ports.Driven;
+using SalesAnalyzer.Application.Ports.Driver;
 
 namespace SalesAnalyzer.Application.UseCases
 {

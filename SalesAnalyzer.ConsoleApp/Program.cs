@@ -1,9 +1,10 @@
 ﻿using System;
-using FileHelpers;
 using Microsoft.Extensions.DependencyInjection;
-using SalesAnalyzer.Adapters;
+using SalesAnalyzer.Adapters.Primary;
+using SalesAnalyzer.Adapters.Secondary;
 using SalesAnalyzer.Application.Domain;
-using SalesAnalyzer.Application.Ports;
+using SalesAnalyzer.Application.Ports.Driven;
+using SalesAnalyzer.Application.Ports.Driver;
 using SalesAnalyzer.Application.UseCases;
 
 namespace SalesAnalyzer.ConsoleApp
@@ -13,7 +14,7 @@ namespace SalesAnalyzer.ConsoleApp
         private static void Main(string[] args)
         {
 
-            Console.WriteLine("Consumer - Hello World!");
+            Console.WriteLine("Running Sales Analyzer...");
 
             var serviceProvider = new ServiceCollection()
                 .AddTransient<ISaleDataProcessor, SaleCsvProcessor>()

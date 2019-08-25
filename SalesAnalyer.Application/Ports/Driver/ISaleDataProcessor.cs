@@ -1,6 +1,6 @@
 ﻿using SalesAnalyzer.Application.Domain;
 
-namespace SalesAnalyzer.Application.UseCases
+namespace SalesAnalyzer.Application.Ports.Driver
 {
     public interface ISaleDataProcessor
     {

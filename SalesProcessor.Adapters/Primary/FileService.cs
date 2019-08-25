@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using SalesProcessor.Application;
 using SalesProcessor.Application.Ports.Driven;
 
 namespace SalesProcessor.Adapters.Primary

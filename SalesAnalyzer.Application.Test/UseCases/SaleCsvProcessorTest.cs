@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SalesAnalyzer.Application.Domain;
-using SalesAnalyzer.Application.Ports;
+using SalesAnalyzer.Application.Ports.Driven;
 using SalesAnalyzer.Application.Test.DataProvider;
 using SalesAnalyzer.Application.UseCases;
 

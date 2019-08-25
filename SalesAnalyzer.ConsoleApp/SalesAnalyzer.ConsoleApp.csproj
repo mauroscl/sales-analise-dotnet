@@ -13,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SalesAnalyer.Application\SalesAnalyzer.Application.csproj" />
     <ProjectReference Include="..\SalesAnalyzer.Adapters\SalesAnalyzer.Adapters.csproj" />
-    <ProjectReference Include="..\SalesProcessor.Adapters\SalesProcessor.Adapters.csproj" />
   </ItemGroup>
 
 </Project>

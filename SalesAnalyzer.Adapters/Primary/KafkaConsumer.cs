@@ -3,11 +3,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Confluent.Kafka;
-using SalesAnalyzer.Application.UseCases;
+using SalesAnalyzer.Application.Ports.Driver;
 
-namespace SalesAnalyzer.ConsoleApp
+namespace SalesAnalyzer.Adapters.Primary
 {
-    internal class KafkaConsumer : IKafkaConsumer
+    public class KafkaConsumer : IKafkaConsumer
     {
         private readonly ISaleDataProcessor _saleDataProcessor;
 

@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SalesAnalyzer.Adapters.Secondary;
 using SalesAnalyzer.Application.Domain;
 
 namespace SalesAnalyzer.Adapters.Test

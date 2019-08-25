@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProcessor.ConsoleApp", "SalesProcessor.ConsoleApp\SalesProcessor.ConsoleApp.csproj", "{C77BCE15-BED7-43FF-9113-B19E6BA0FCC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Application.Test", "BusinessTest\SalesAnalyzer.Application.Test.csproj", "{0754F473-C588-45AE-8345-80FF53EEA4FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Application.Test", "SalesAnalyzer.Application.Test\SalesAnalyzer.Application.Test.csproj", "{0754F473-C588-45AE-8345-80FF53EEA4FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProcesssor.Adapters.Test", "InfraStructureTest\SalesProcesssor.Adapters.Test.csproj", "{82FD616B-C5A4-481A-B568-C6DEAF727A29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProcesssor.Adapters.Test", "SalesProcesssor.Adapters.Test\SalesProcesssor.Adapters.Test.csproj", "{82FD616B-C5A4-481A-B568-C6DEAF727A29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sales-processor", "sales-processor", "{C9852A01-2DFC-4D96-BBF1-71D066DAC4E9}"
 EndProject
@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9276366A-6AC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B998FD9D-C31A-4E40-B19D-F1480B257F8C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sale-analyzer", "sale-analyzer", "{CCC0175D-C1F3-4969-83C6-A52046E2C1F1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sales-analyzer", "sales-analyzer", "{CCC0175D-C1F3-4969-83C6-A52046E2C1F1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{86D665F1-D4D5-4849-8AA5-97FC91607C0A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DF6B13FE-8C05-4006-9B21-2760DB8A4F9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Adapters.Test", "AdaptersTest\SalesAnalyzer.Adapters.Test.csproj", "{CCF10993-79CC-4639-91B7-6B6DF4C84D65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Adapters.Test", "SalesAnalyzer.Adapters.Test\SalesAnalyzer.Adapters.Test.csproj", "{CCF10993-79CC-4639-91B7-6B6DF4C84D65}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProcessor.Application", "SalesProcessor.Application\SalesProcessor.Application.csproj", "{AA03FC1D-4C31-4258-96BD-0E48B178574E}"
 EndProject

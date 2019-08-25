@@ -1,4 +1,4 @@
-﻿namespace SalesAnalyzer.Adapters
+﻿namespace SalesAnalyzer.Adapters.Secondary
 {
     public interface IFileHelperEngine
     {
