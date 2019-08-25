@@ -16,11 +16,10 @@ namespace SalesAnalyzer.Application.UseCases
             _salesStatisticsService = salesStatisticsService;
         }
 
-        public SalesSummary Process(string inputFile, string outputPath)
+        public SalesSummary Process(string inputFile)
         {
             Console.WriteLine("Processing file: " + inputFile);
 
-            //var salesContext = _salesContextLoader.Load(inputFile);
             var salesContext = _salesContextLoader.LoadCsv(inputFile);
 
             var mostExpensiveSales = _salesStatisticsService.CalculateMostExpensiveSales(salesContext.Sales);

@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SalesProcessor.Adapters.Primary;
+using SalesProcessor.Adapters.Secondary;
 
-namespace SalesProcesssor.Adapters.Test.Primary
+namespace SalesProcesssor.Adapters.Test.Secondary
 {
     [TestClass]
     public class FileServiceTest

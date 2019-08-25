@@ -21,11 +21,11 @@ namespace SalesAnalyzer.ConsoleApp
                 .AddTransient<ISalesContextLoader, SalesContextLoader>()
                 .AddTransient<ISalesStatisticsService, SalesStatisticsService>()
                 .AddTransient<IFileHelperEngine, SalesFileHelperEngine>()
-                .AddTransient<IKafkaConsumer, KafkaConsumer>()
+                .AddTransient<ISalesAnalyzerPrimaryAdapter, KafkaSalesAnalyzerAdapter>()
                 .BuildServiceProvider();
 
-            var kafkaConsumer = serviceProvider.GetService<IKafkaConsumer>();
-            kafkaConsumer.Consume();
+            var kafkaConsumer = serviceProvider.GetService<ISalesAnalyzerPrimaryAdapter>();
+            kafkaConsumer.ConfigureConsumer();
 
         }
     }

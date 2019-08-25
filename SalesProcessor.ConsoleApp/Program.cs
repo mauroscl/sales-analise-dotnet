@@ -42,7 +42,7 @@ namespace SalesProcessor.ConsoleApp
                 .AddTransient<ISalesSummaryOutputService, SalesSummaryOutputFileService>()
                 .AddTransient<ISalesAnalyserIntegrator, KafkaSalesAnalyserIntegrator>()
                 .AddTransient<ISaleInputProcessor, SaleInputProcessor>()
-                .AddTransient<FileSaleProcessor, FileSaleProcessor>()
+                .AddTransient<FileSaleInputAdapter, FileSaleInputAdapter>()
                 .BuildServiceProvider();
         }
 
@@ -77,7 +77,7 @@ namespace SalesProcessor.ConsoleApp
         private static void OnChanged(object source, FileSystemEventArgs e)
         {
             Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
-            var fileSaleProcessor = _serviceProvider.GetService<FileSaleProcessor>();
+            var fileSaleProcessor = _serviceProvider.GetService<FileSaleInputAdapter>();
             fileSaleProcessor.ProcessFile(e.FullPath);
 
 
@@ -86,7 +86,7 @@ namespace SalesProcessor.ConsoleApp
 
         private static void ProcessExistingFiles(IFileService fileService)
         {
-            var fileSaleProcessor = _serviceProvider.GetService<FileSaleProcessor>();
+            var fileSaleProcessor = _serviceProvider.GetService<FileSaleInputAdapter>();
 
             var unprocessedFiles = fileService.GetUnprocessedFiles(InputPath);
             foreach (var unprocessedFile in unprocessedFiles)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using SalesProcessor.Application.Ports.Driven;
 
-namespace SalesProcessor.Adapters.Primary
+namespace SalesProcessor.Adapters.Secondary
 {
     public class FileService : IFileService
     {
