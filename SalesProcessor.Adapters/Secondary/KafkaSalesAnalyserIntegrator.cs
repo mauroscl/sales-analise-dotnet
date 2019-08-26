@@ -16,7 +16,7 @@ namespace SalesProcessor.Adapters.Secondary
         {
             _producerConfig = new ProducerConfig
             {
-                BootstrapServers = "localhost:9092"
+                BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_SERVER")
             };
         }
 
@@ -28,7 +28,13 @@ namespace SalesProcessor.Adapters.Secondary
                 var kafkaHeaders = new Headers {{KafkaConfig.FileNameHeader, Encoding.ASCII.GetBytes(saleKey)}};
 
                 producer.Produce(SaleAnalysisInputTopic,
-                    new Message<string, string> {Key = saleKey , Value = data, Headers = kafkaHeaders });
+                    new Message<string, string> {Key = saleKey , Value = data, Headers = kafkaHeaders }, report =>
+                    {
+                        if (report.Error != null)
+                        {
+                            Console.WriteLine(report.Error.Reason);
+                        }
+                    });
                 producer.Flush(TimeSpan.FromSeconds(30));
 
                 Console.WriteLine($"Content of file {saleKey} sent to kafka");

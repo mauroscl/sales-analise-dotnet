@@ -1,12 +1,11 @@
 ﻿using Confluent.Kafka;
+using Newtonsoft.Json;
 using SalesProcessor.Application.Ports.Driver;
 using SalesProcessor.Application.UseCases;
 using System;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace SalesProcessor.Adapters.Primary
 {
@@ -17,7 +16,7 @@ namespace SalesProcessor.Adapters.Primary
 
         private static readonly string ConsumerGroup = "sales-statistics-consumer";
 
-        private static readonly string KafkaServer = "localhost:9092";
+        private static readonly string KafkaServer = Environment.GetEnvironmentVariable("KAFKA_SERVER");
 
         private readonly ConsumerConfig _consumerConfig;
 

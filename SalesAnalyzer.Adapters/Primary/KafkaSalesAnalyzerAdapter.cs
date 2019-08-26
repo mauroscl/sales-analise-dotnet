@@ -18,7 +18,7 @@ namespace SalesAnalyzer.Adapters.Primary
         private static readonly string ConsumerGroup = "sales-data-consumer";
 
         private static readonly string CustomHeadersPrefix = "CTM";
-        private static readonly string KafkaServer = "localhost:9092";
+        private static readonly string KafkaServer = Environment.GetEnvironmentVariable("KAFKA_SERVER");
 
         private readonly ISaleDataProcessor _saleDataProcessor;
 

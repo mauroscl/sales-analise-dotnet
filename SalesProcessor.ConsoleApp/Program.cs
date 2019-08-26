@@ -17,8 +17,8 @@ namespace SalesProcessor.ConsoleApp
         //private const string InputPath = "d:\\data\\in";
         //private const string OutputPath = "d:\\data\\out";
 
-        private const string InputPath = "data\\in";
-        private const string OutputPath = "data\\out";
+        private const string InputPath = "data/in";
+        private const string OutputPath = "data/out";
         private static IServiceProvider _serviceProvider;
 
         private static void Main(string[] args)
@@ -42,9 +42,7 @@ namespace SalesProcessor.ConsoleApp
             var kafkaSaleOutputAdapter = _serviceProvider.GetService<KafkaSaleStatisticsAdapter>();
             Task.Run(() => kafkaSaleOutputAdapter.ConfigureConsumer(InputPath, OutputPath, cts.Token), cts.Token);
 
-            //ProcessExistingFiles(fileService);
-
-            //await Task.Run(() => InitializeFileWatcher(cts.Token), cts.Token) ;
+            ProcessExistingFiles(fileService);
 
             InitializeFileWatcher(cts.Token);
         }

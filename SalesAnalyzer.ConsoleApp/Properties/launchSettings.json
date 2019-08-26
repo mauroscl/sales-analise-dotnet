@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SalesAnalyzer.ConsoleApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "KAFKA_SERVER": "localhost:9092"
+      }
+    }
+  }
+}
