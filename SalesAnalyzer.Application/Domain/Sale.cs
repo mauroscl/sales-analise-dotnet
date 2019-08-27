@@ -15,7 +15,7 @@ namespace SalesAnalyzer.Application.Domain
             Items = new List<SaleItem>();
         }
 
-        protected Sale()
+        private Sale()
         {
         }
 

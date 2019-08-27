@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Application",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Adapters", "SalesAnalyzer.Adapters\SalesAnalyzer.Adapters.csproj", "{065F8AEE-4E06-4B4D-B94D-1CC176CF7B4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalesProcessor.Configuration", "SalesProcessor.Configuration\SalesProcessor.Configuration.csproj", "{4F94C895-EAA8-4509-8DB9-FDDAB347A97B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProcessor.Configuration", "SalesProcessor.Configuration\SalesProcessor.Configuration.csproj", "{4F94C895-EAA8-4509-8DB9-FDDAB347A97B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

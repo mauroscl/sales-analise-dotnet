@@ -36,13 +36,6 @@ namespace SalesProcessor.Adapters.Secondary
             }
         }
 
-        public string GetStatisticsFileName(string inputFile, string outputPath)
-        {
-            var destinationFileName =
-                Path.GetFileNameWithoutExtension(inputFile) + ".done" + Path.GetExtension(inputFile);
-            return Path.Combine(outputPath, destinationFileName);
-        }
-
  
     }
 }

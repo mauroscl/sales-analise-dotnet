@@ -80,6 +80,7 @@ namespace SalesProcessor.ConsoleApp
             _serviceProvider = new ServiceCollection()
 
                 .AddTransient<IFileService, FileService>()
+                .AddTransient<IFileNameService, FileNameService>()
                 .AddTransient<ISalesSummaryOutputService, SalesSummaryOutputFileService>()
                 .AddTransient<ISalesAnalyserIntegrator, KafkaSalesAnalyserIntegrator>()
                 .AddTransient<ISaleDataProcessor, SaleDataProcessor>()

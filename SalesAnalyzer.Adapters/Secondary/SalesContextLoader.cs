@@ -14,12 +14,6 @@ namespace SalesAnalyzer.Adapters.Secondary
             _fileHelperEngine = fileHelperEngine;
         }
 
-        public SalesContext Load(string filePath)
-        {
-            var records = _fileHelperEngine.ReadCsvFile(filePath);
-            return TransformToSalesContext(records);
-        }
-
         public SalesContext LoadCsv(string csvContent)
         {
             var records = _fileHelperEngine.ReadCsv(csvContent);

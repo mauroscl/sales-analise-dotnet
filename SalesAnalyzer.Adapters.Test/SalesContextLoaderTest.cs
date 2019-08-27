@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SalesAnalyzer.Adapters.Secondary;
-using SalesAnalyzer.Application.Domain;
+using System;
+using System.Linq;
 
 namespace SalesAnalyzer.Adapters.Test
 {
@@ -11,48 +9,47 @@ namespace SalesAnalyzer.Adapters.Test
     public class SalesContextLoaderTest
     {
         [TestMethod]
-        public void MustLoadContextFromEmptyFile()
+        public void MustLoadContextFromEmptyContent()
         {
-            var fileHelperEngineMock = new Mock<IFileHelperEngine>();
-            fileHelperEngineMock.Setup(x => x.ReadCsvFile(It.IsAny<string>())).Returns(new object[] { });
-            var salesContextLoader = new SalesContextLoader(fileHelperEngineMock.Object);
 
-            var salesContext = salesContextLoader.Load("data/in/sale.dat");
+            var salesContextLoader = new SalesContextLoader(new SalesFileHelperEngine());
+
+            var salesContext = salesContextLoader.LoadCsv("");
 
             Assert.AreEqual(0, salesContext.AmountSalesman);
             Assert.AreEqual(0, salesContext.AmountCustomer);
             Assert.IsFalse(salesContext.Sales.Any());
 
-            fileHelperEngineMock.Verify(x => x.ReadCsvFile(It.IsAny<string>()), Times.Once);
         }
 
         [TestMethod]
-        public void MustLoadContextFromFullFiles()
+        public void MustLoadContextFromFullContent()
         {
-            var salesman = new Salesman {Name = "Mauro", Cpf = "xxx", Salary = 1000};
-            var customer = new Customer
-            {
-                Cnpj = "8684",
-                Name = "Enterprise",
-                BusinessArea = "Rural"
-            };
-            var sale = new Sale("001", "Mauro");
-            var saleItem = new SaleItem("001", 10, 20);
-            sale.SetItems(new List<SaleItem> {saleItem});
 
-            var objects = new object[] {salesman, customer, sale};
+            var salesContextLoader = new SalesContextLoader(new SalesFileHelperEngine());
 
-            var fileHelperEngineMock = new Mock<IFileHelperEngine>();
-            fileHelperEngineMock.Setup(x => x.ReadCsvFile(It.IsAny<string>())).Returns(objects);
-            var salesContextLoader = new SalesContextLoader(fileHelperEngineMock.Object);
+            var content = "001ç9684448448744çMauroç50000" + Environment.NewLine +
+                          "002ç2345675434544345çJose da SilvaçRural" + Environment.NewLine +
+                          "003ç10ç[1-10-100,2-30-2.50,3-40-3.10]çMauro";
 
-            var salesContext = salesContextLoader.Load("data/in/sale.dat");
+            var salesContext = salesContextLoader.LoadCsv(content);
 
             Assert.AreEqual(1, salesContext.AmountSalesman);
             Assert.AreEqual(1, salesContext.AmountCustomer);
             Assert.AreEqual(1, salesContext.Sales.Count);
 
-            fileHelperEngineMock.Verify(x => x.ReadCsvFile(It.IsAny<string>()), Times.Once);
+            var sale = salesContext.Sales[0];
+            Assert.AreEqual("Mauro", sale.Salesman);
+            Assert.AreEqual("10", sale.SaleId);
+
+            Assert.AreEqual(3, sale.Items.Count());
+
+            var firstItem = sale.Items.First();
+
+            Assert.AreEqual("1", firstItem.Id);
+            Assert.AreEqual(10,firstItem.Quantity);
+            Assert.AreEqual(100, firstItem.Price);
+
         }
     }
 }

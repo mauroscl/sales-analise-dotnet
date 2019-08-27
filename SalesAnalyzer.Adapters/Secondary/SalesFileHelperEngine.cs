@@ -10,17 +10,6 @@ namespace SalesAnalyzer.Adapters.Secondary
         private const string CustomerIdentifier = "002";
         private const string SaleIdentifier = "003";
 
-        public object[] ReadCsvFile(string filePath)
-        {
-            var engine = new MultiRecordEngine(typeof(Salesman),
-                    typeof(Customer),
-                    typeof(Sale))
-                {RecordSelector = CustomSelector};
-
-
-            return engine.ReadFile(filePath);
-        }
-
         public object[] ReadCsv(string content)
         {
             var engine = new MultiRecordEngine(typeof(Salesman),

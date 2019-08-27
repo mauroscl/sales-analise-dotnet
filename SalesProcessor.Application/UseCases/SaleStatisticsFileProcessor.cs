@@ -9,17 +9,20 @@ namespace SalesProcessor.Application.UseCases
     {
 
         private readonly IFileService _fileService;
+        private readonly IFileNameService _fileNameService;
         private readonly ISalesSummaryOutputService _salesSummaryOutputService;
 
-        public SaleStatisticsFileProcessor(IFileService fileService, ISalesSummaryOutputService salesSummaryOutputService)
+        public SaleStatisticsFileProcessor(IFileService fileService, ISalesSummaryOutputService salesSummaryOutputService
+            , IFileNameService fileNameService)
         {
             _fileService = fileService;
-            this._salesSummaryOutputService = salesSummaryOutputService;
+            _salesSummaryOutputService = salesSummaryOutputService;
+            _fileNameService = fileNameService;
         }
 
         public void PersistStatistics(SalesSummary salesSummary, string fileName, string inputPath, string outputPath)
         {
-            var outputFilePath = _fileService.GetStatisticsFileName(fileName, outputPath);
+            var outputFilePath = _fileNameService.GetStatisticsFileName(fileName, outputPath);
             _salesSummaryOutputService.Write(outputFilePath, salesSummary);
 
             var inputFileFullPath = Path.Combine(inputPath, fileName);
