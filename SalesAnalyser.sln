@@ -35,6 +35,24 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesAnalyzer.Adapters", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalesProcessor.Configuration", "SalesProcessor.Configuration\SalesProcessor.Configuration.csproj", "{4F94C895-EAA8-4509-8DB9-FDDAB347A97B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "resources", "resources", "{EEC44D19-8462-4596-9208-8CCF3E554CCB}"
+	ProjectSection(SolutionItems) = preProject
+		analyzer.Dockerfile = analyzer.Dockerfile
+		docker-compose-kafka.yml = docker-compose-kafka.yml
+		docker-compose.yml = docker-compose.yml
+		processor.Dockerfile = processor.Dockerfile
+		README.md = README.md
+		wait-for-it.sh = wait-for-it.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "arquivos-exemplo", "arquivos-exemplo", "{9FBA6495-8897-4698-879D-C06D92E6FB6B}"
+	ProjectSection(SolutionItems) = preProject
+		arquivos-exemplo\arquivo1.dat = arquivos-exemplo\arquivo1.dat
+		arquivos-exemplo\arquivo2.dat = arquivos-exemplo\arquivo2.dat
+		arquivos-exemplo\exemplo2.dat = arquivos-exemplo\exemplo2.dat
+		arquivos-exemplo\vazio.dat = arquivos-exemplo\vazio.dat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +118,7 @@ Global
 		{7A7917FD-E001-49C8-B082-EE973BF72328} = {86D665F1-D4D5-4849-8AA5-97FC91607C0A}
 		{065F8AEE-4E06-4B4D-B94D-1CC176CF7B4D} = {86D665F1-D4D5-4849-8AA5-97FC91607C0A}
 		{4F94C895-EAA8-4509-8DB9-FDDAB347A97B} = {9276366A-6AC9-4158-A14C-88D21662784B}
+		{9FBA6495-8897-4698-879D-C06D92E6FB6B} = {EEC44D19-8462-4596-9208-8CCF3E554CCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C9F3CCB-5256-4D20-8071-5F7320E39606}

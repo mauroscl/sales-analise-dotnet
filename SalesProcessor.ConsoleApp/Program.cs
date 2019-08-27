@@ -5,23 +5,16 @@ using SalesProcessor.Adapters.Secondary;
 using SalesProcessor.Application.Ports.Driven;
 using SalesProcessor.Application.Ports.Driver;
 using SalesProcessor.Application.UseCases;
+using SalesProcessor.Configuration;
 using System;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SalesProcessor.Configuration;
 
 namespace SalesProcessor.ConsoleApp
 {
     internal static class Program
     {
-        //private const string InputPath = "d:\\data\\in";
-        //private const string OutputPath = "d:\\data\\out";
-
-        //private const string InputPath = "data/in";
-        //private const string OutputPath = "data/out";
-
         private static IServiceProvider _serviceProvider;
 
         private static void Main(string[] args)
@@ -29,26 +22,24 @@ namespace SalesProcessor.ConsoleApp
 
             Console.WriteLine("Running Sales Processor...");
 
-            if (args.Length != 3)
+            if (args.Length != 4)
             {
                 Console.WriteLine("Invalid number of arguments");
-                Console.WriteLine("Usage: dotnet run <KAFKA_SERVER> <INPUT_PATH> <OUTPUT_PATH>");
+                Console.WriteLine("Usage: dotnet run <APPID> <KAFKA_SERVER> <INPUT_PATH> <OUTPUT_PATH>");
                 Environment.Exit(1);
             }
 
-            var applicationId = GenerateApplicationId(args[1], args[2]);
-
-            Environment.SetEnvironmentVariable(AppConfig.KafkaServerEnv, args[0]);
-            Environment.SetEnvironmentVariable(AppConfig.InputPathEnv, args[1]);
-            Environment.SetEnvironmentVariable(AppConfig.OuputPathEnv, args[2]);
-            Environment.SetEnvironmentVariable(AppConfig.ApplicationIdEnv, applicationId);
+            Environment.SetEnvironmentVariable(AppConfig.ApplicationIdEnv, args[0]);
+            Environment.SetEnvironmentVariable(AppConfig.KafkaServerEnv, args[1]);
+            Environment.SetEnvironmentVariable(AppConfig.InputPathEnv, args[2]);
+            Environment.SetEnvironmentVariable(AppConfig.OuputPathEnv, args[3]);
 
             var fileInputPath = Environment.GetEnvironmentVariable(AppConfig.InputPathEnv);
             var fileOutputPath = Environment.GetEnvironmentVariable(AppConfig.OuputPathEnv);
 
             Console.WriteLine("ENVIRONMENT...");
             Console.WriteLine($"APPLICATION IDENTIFIER: {Environment.GetEnvironmentVariable(AppConfig.ApplicationIdEnv)}");
-            Console.WriteLine($"KAFKA SERVER: {args[0]}");
+            Console.WriteLine($"KAFKA SERVER: {Environment.GetEnvironmentVariable(AppConfig.KafkaServerEnv)}");
             Console.WriteLine($"INPUT PATH: {fileInputPath}");
             Console.WriteLine($"OUTPUT PATH: {fileOutputPath}");
 
@@ -133,14 +124,5 @@ namespace SalesProcessor.ConsoleApp
             }
         }
 
-        private static string GenerateApplicationId(string inputPath, string outputPath)
-        {
-            var stringToConvert = Path.GetFullPath(inputPath) + Path.GetFullPath(outputPath) +  Environment.MachineName ;
-            var inputBuffer = Encoding.UTF8.GetBytes(stringToConvert);
-
-            var base64String = Convert.ToBase64String(inputBuffer);
-            return base64String.Substring(0, 10) + base64String.Substring(base64String.Length -10, 10);
-
-        }
-    }
+   }
 }
