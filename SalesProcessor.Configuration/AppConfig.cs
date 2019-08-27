@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Configuration
+namespace SalesProcessor.Configuration
 {
     public static class AppConfig
     {

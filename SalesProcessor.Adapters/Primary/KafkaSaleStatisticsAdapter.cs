@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Configuration;
+using SalesProcessor.Configuration;
 
 namespace SalesProcessor.Adapters.Primary
 {

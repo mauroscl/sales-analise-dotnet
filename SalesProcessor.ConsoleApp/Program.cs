@@ -1,5 +1,4 @@
-﻿using Configuration;
-using InfraStructure;
+﻿using InfraStructure;
 using Microsoft.Extensions.DependencyInjection;
 using SalesProcessor.Adapters.Primary;
 using SalesProcessor.Adapters.Secondary;
@@ -11,6 +10,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SalesProcessor.Configuration;
 
 namespace SalesProcessor.ConsoleApp
 {

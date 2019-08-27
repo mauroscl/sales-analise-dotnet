@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\SalesProcessor.Adapters\SalesProcessor.Adapters.csproj" />
+    <ProjectReference Include="..\SalesProcessor.Configuration\SalesProcessor.Configuration.csproj" />
   </ItemGroup>
 
 </Project>

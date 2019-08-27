@@ -2,8 +2,7 @@
 using SalesProcessor.Application.Ports.Driven;
 using System;
 using System.Text;
-using Configuration;
-using SalesProcessor.Adapters.Primary;
+using SalesProcessor.Configuration;
 
 namespace SalesProcessor.Adapters.Secondary
 {
