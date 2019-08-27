@@ -12,12 +12,11 @@ namespace SalesAnalyzer.Adapters.Primary
     public class KafkaSalesAnalyzerAdapter : ISalesAnalyzerPrimaryAdapter
     {
 
-        private static readonly string SaleAnalysisInputTopic = "sales-analysis-input";
-        private static readonly string SaleAnalysisOutputTopic = "sales-analysis-output";
+        private const string SaleAnalysisInputTopic = "sales-analysis-input";
 
-        private static readonly string ConsumerGroup = "sales-data-consumer";
+        private const string ConsumerGroup = "sales-data-consumer";
 
-        private static readonly string CustomHeadersPrefix = "CTM";
+        private const string CustomHeadersPrefix = "CTM";
         private static readonly string KafkaServer = Environment.GetEnvironmentVariable("KAFKA_SERVER");
 
         private readonly ISaleDataProcessor _saleDataProcessor;
@@ -75,18 +74,20 @@ namespace SalesAnalyzer.Adapters.Primary
         {
             var customHeaders = CopyCustomHeaders(headers);
 
+            var header = customHeaders.First(h => h.Key.Equals("CTM_SALES_ANALYSIS_OUTPUT_TOPIC"));
+            var outputTopic = Encoding.ASCII.GetString(header.GetValueBytes());
+
             var serializeSaleSummary = JsonConvert.SerializeObject(salesSummary, Formatting.Indented);
 
             using (var producer = new ProducerBuilder<Null, string>(_producerConfig).Build())
             {
 
-                producer.Produce(SaleAnalysisOutputTopic,
-                    new Message<Null, string> { Value = serializeSaleSummary, Headers = customHeaders });
+                producer.Produce(outputTopic,new Message<Null, string> { Value = serializeSaleSummary, Headers = customHeaders });
+
                 producer.Flush(TimeSpan.FromSeconds(5));
 
-                var fileName = Encoding.ASCII.GetString(headers.FirstOrDefault(h => h.Key.Equals("CTM_FILE_NAME"))?.GetValueBytes()) ;
+                PrintLogs(customHeaders);
 
-                Console.WriteLine($"Response for file {fileName} sent to kafka");
             }
 
         }
@@ -101,6 +102,19 @@ namespace SalesAnalyzer.Adapters.Primary
             }
 
             return kafkaHeaders;
+        }
+
+        private void PrintLogs(Headers headers)
+        {
+            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine("Message processed");
+            Console.WriteLine("Custom Headers:");
+            foreach (var header in headers)
+            {
+                Console.WriteLine($"{header.Key}: {Encoding.ASCII.GetString(header.GetValueBytes())}");
+            }
+            Console.WriteLine("-------------------------------------------");
+
         }
 
     }

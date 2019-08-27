@@ -16,8 +16,4 @@
     <ProjectReference Include="..\SalesProcessor.Adapters\SalesProcessor.Adapters.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Primary\" />
-  </ItemGroup>
-
 </Project>

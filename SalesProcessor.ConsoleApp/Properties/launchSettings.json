@@ -2,9 +2,7 @@
   "profiles": {
     "SalesProcessor.ConsoleApp": {
       "commandName": "Project",
-      "environmentVariables": {
-        "KAFKA_SERVER": "localhost:9092"
-      }
+      "commandLineArgs": "localhost:9092 data/in data/out"
     }
   }
 }

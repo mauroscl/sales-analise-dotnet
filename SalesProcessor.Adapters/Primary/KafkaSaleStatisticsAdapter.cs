@@ -6,29 +6,27 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Configuration;
 
 namespace SalesProcessor.Adapters.Primary
 {
     public class KafkaSaleStatisticsAdapter
     {
 
-        private static readonly string SaleAnalysisOutputTopic = "sales-analysis-output";
-
-        private static readonly string ConsumerGroup = "sales-statistics-consumer";
-
-        private static readonly string KafkaServer = Environment.GetEnvironmentVariable("KAFKA_SERVER");
+        private static readonly string ConsumerGroup = "sales-statistics-consumer-" + Environment.GetEnvironmentVariable(AppConfig.ApplicationIdEnv);
 
         private readonly ConsumerConfig _consumerConfig;
 
         private readonly ISaleStatisticsProcessor _saleStatisticsProcessor;
+
         public KafkaSaleStatisticsAdapter(ISaleStatisticsProcessor saleStatisticsProcessor)
         {
             _saleStatisticsProcessor = saleStatisticsProcessor;
             _consumerConfig = new ConsumerConfig
             {
                 AutoOffsetReset = AutoOffsetReset.Earliest,
-                BootstrapServers = KafkaServer,
-                GroupId = ConsumerGroup
+                BootstrapServers = Environment.GetEnvironmentVariable(AppConfig.KafkaServerEnv),
+                GroupId = ConsumerGroup 
             };
         }
 
@@ -36,7 +34,7 @@ namespace SalesProcessor.Adapters.Primary
         {
             using (var consumer = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build())
             {
-                consumer.Subscribe(SaleAnalysisOutputTopic);
+                consumer.Subscribe(AppConfig.GetSalesAnalysisOutputTopic());
 
                 try
                 {
@@ -44,6 +42,7 @@ namespace SalesProcessor.Adapters.Primary
                         try
                         {
                             var consumerRecord = consumer.Consume(cancellationToken);
+
                             var fileName = GetFileName(consumerRecord.Headers);
 
                             var salesSummary = JsonConvert.DeserializeObject<SalesSummary>(consumerRecord.Value);
@@ -65,9 +64,9 @@ namespace SalesProcessor.Adapters.Primary
             }
         }
 
-        private string GetFileName(Headers headers)
+        private static string GetFileName(Headers headers)
         {
-            var header = headers.First(h => h.Key.Equals(KafkaConfig.FileNameHeader));
+            var header = headers.First(h => h.Key.Equals(AppConfig.KafkaFileNameHeader));
             return Encoding.ASCII.GetString(header.GetValueBytes());
         }
 
