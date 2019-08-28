@@ -122,12 +122,13 @@ primary|SalesProcessor, por exemplo, tem como porta de entrada para inicia do pr
 secondary|SalesProcessor, por exemplo, implementa adapters para o sistema de arquvivo e para o sistema de mensageria do Kafka
 
 ## Como rodar
-Foi feita uma tentativa para colocar as duas aplicações e mais o kafka e o zookeeper em um docker-compose. Por isso, temos o arquivo `docker-compose.yml`.Essa tentativa não funcionou.Os containers subiram normalmente, mas quando uma mensagem é enviada pelo SalesProcessor para o Kafka, a mesma se perde, sem gerar nenhum tipo de erro. Talvez seja alguma questão de configuração da rede do docker
-Como esta configuração não foi possível, temos que rodar o kafka e as duas aplicações manualmente.
+Podemos rodar a aplicação de duas formas: manualmente e via docker-compose
 
-### Rodar Kafka
+### Manualmente
+
+#### Rodar Kafka
 executar o comando `docker-compose -f docker-compose-kafka.yml up` a partir da raiz do código fonte
-### Rodar Sales Analyzer
+#### Rodar Sales Analyzer
 É necessário passar como variável de ambiente o endereço do servidor do Kafka.
 Formato do comando:
 `
@@ -167,7 +168,7 @@ Topic:sales-analysis-input      PartitionCount:2        ReplicationFactor:1     
         Topic: sales-analysis-input     Partition: 1    Leader: 1001    Replicas: 1001  Isr: 1001
 ```
 
-### Rodar Sales Processor
+#### Rodar Sales Processor
 
  É necessário passar parâmetros na seguinte ordem:
 - Identificador da aplicação
@@ -189,6 +190,25 @@ Watching folder D:\Users\mauro\dev\sales-analise-dotnet\data\in
 Pode ser executadas n instâncias de SalesProcessor, uma em cada pasta
 
 Na pasta arquivos-exemplo, existem alguns arquivos que  podem ser usados como input para teste
+
+### docker-compose
+
+Antes de executar o docker-compose é necessário obter o ip do host do docker. Houve uma tentativa de obter automaticamente, mas não funcionou.
+Para obter o IP deve ser executado o comando 
+```
+ip -4 addr show docker0 | grep -Po 'inet \K[\d.]+'
+```
+Após obter o IP editar o arquivo `docker-compose.yml` e substituir o IP na variável de ambiente `KAFKA_ADVERTISED_HOST_NAME`
+
+Executar o comando `docker-compose up`. Este comando vai iniciar uma instância de cada serviço.
+
+O serviço sales-processor não deve ser escalado via docker-compose, pois duas instâncias rodariam escutando o mesmo diretório.
+
+Para escalar o serviço sales-analyzer, é necessário primeiro aumentar o número de partições do tópico `sales-analysis-input`. Para fazer isso, devem ser seguidas as mesmas instruções da seção `Rodar Sales Analyzer`.
+
+Em seguida deve ser executado o comando `docker-compose scale sales-analyzer=2`. No exemplo, estamos aumentando para duas instâncias. Pode ser informado o número de instâncias que for necessário.
+
+Importante reforçar que o número de instâncias do serviço deve ser igual ao número de partições. Se o número de instâncias for maior, alguns consumidores ficarão em idle.
 
 ## Exemplo de execução
 Ao colocar um arquivo no arquivo no diretório de entrada temos a seguinte saída em SalesProcessor
