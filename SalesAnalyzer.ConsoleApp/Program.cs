@@ -16,7 +16,8 @@ namespace SalesAnalyzer.ConsoleApp
         {
 
             Console.WriteLine("Running Sales Analyzer...");
-
+            Console.WriteLine($"KAFKA SERVER: {Environment.GetEnvironmentVariable("KAFKA_SERVER")}");
+            
             var serviceProvider = new ServiceCollection()
                 .AddTransient<ISaleDataProcessor, SaleCsvProcessor>()
                 .AddTransient<ISalesContextLoader, SalesContextLoader>()
